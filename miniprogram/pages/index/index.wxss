@@ -1,26 +1,101 @@
+/* 加载样式 */
+.loading-container {
+  text-align: center;
+  margin-top: 200rpx;
+  color: #999;
+}
+
+/* 容器 */
 .container {
-  padding: 20rpx;
-  background-color: #f5f5f5;
-  min-height: 100vh;
+  padding: 20rpx 0;
 }
+
+/* 任务卡片 */
 .task-card {
-  background: white;
+  background: #fff;
   border-radius: 16rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
+  padding: 32rpx;
+  margin: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
 }
-.task-type {
+
+/* 任务类型标签 */
+.task-tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
   font-size: 24rpx;
-  color: #1677ff;
-  margin-bottom: 10rpx;
+  color: #fff;
+  margin-bottom: 16rpx;
 }
+
+/* 不同类型标签颜色 */
+.task-tag.take {
+  background: #34c759;
+}
+.task-tag.ask {
+  background: #ff9500;
+}
+.task-tag.team {
+  background: #007aff;
+}
+
+/* 任务内容 */
 .task-content {
   font-size: 32rpx;
+  color: #333;
+  line-height: 1.6;
   margin-bottom: 20rpx;
 }
+
+/* 任务信息 */
 .task-info {
   display: flex;
   justify-content: space-between;
-  font-size: 24rpx;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.task-user {
+  font-size: 26rpx;
   color: #666;
+}
+
+.task-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 操作按钮 */
+.task-action {
+  text-align: right;
+}
+
+.btn-action {
+  background: #007aff;
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 12rpx 32rpx;
+  font-size: 28rpx;
+  border: none;
+  line-height: 1.4;
+}
+
+/* 空数据 */
+.empty-container {
+  text-align: center;
+  margin-top: 200rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 30rpx;
+  color: #999;
+  margin-bottom: 40rpx;
 }

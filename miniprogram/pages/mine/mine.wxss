@@ -1,0 +1,126 @@
+.mine-container {
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* 用户信息卡片 */
+.user-card {
+  background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
+  padding: 40rpx 30rpx;
+  color: #fff;
+  border-radius: 0 0 32rpx 32rpx;
+}
+
+.avatar-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #fff;
+  margin-right: 20rpx;
+}
+
+.nickname {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.score-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.score-num {
+  font-size: 60rpx;
+  font-weight: bold;
+}
+
+.score-text {
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+
+.score-rule-btn {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  border: none;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+}
+
+/* 积分记录 */
+.score-record {
+  margin: 30rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.record-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid #f8f8f8;
+}
+
+.record-desc {
+  font-size: 28rpx;
+  color: #333;
+  flex: 2;
+}
+
+.record-score {
+  font-size: 28rpx;
+  flex: 1;
+  text-align: center;
+}
+
+.record-score.add {
+  color: #34c759;
+}
+
+.record-score.reduce {
+  color: #ff3b30;
+}
+
+.record-time {
+  font-size: 24rpx;
+  color: #999;
+  flex: 1;
+  text-align: right;
+}
+
+.empty-record {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 积分规则弹窗 */
+.rule-content {
+  padding: 20rpx 0;
+}
+
+.rule-item {
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #666;
+}

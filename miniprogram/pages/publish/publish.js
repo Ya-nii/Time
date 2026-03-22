@@ -1,49 +1,58 @@
+const app = getApp();
+
 Page({
   data: {
-    content: "" // 存输入的内容
+    content: '',
+    currentType: 'take'
   },
 
-  // 监听输入框变化，实时更新content
+  selectType(e) {
+    this.setData({ currentType: e.currentTarget.dataset.type });
+  },
+
   onInput(e) {
-    this.setData({
-      content: e.detail.value
-    })
+    this.setData({ content: e.detail.value });
   },
 
-  // 发布按钮点击事件
   submit() {
-    const { content } = this.data;
-    const token = wx.getStorageSync('token')
+    const content = this.data.content.trim();
+    const type = this.data.currentType;
+    const token = wx.getStorageSync('token');
 
-    // 校验内容
-    if (!content.trim()) {
-      wx.showToast({ title: "内容不能为空", icon: "none" })
-      return
+    if (!content) {
+      wx.showToast({ title: '请输入内容', icon: 'none' });
+      return;
     }
+
     if (!token) {
-      wx.showToast({ title: "请先登录", icon: "none" })
-      return
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
     }
 
-    // 调用发布接口
     wx.request({
-      // 替换成后端给的真实接口地址
-      url: "https://api.xxx.com/publish",
-      method: "POST",
-      header: { token: token },
-      data: { content: content },
-      success: (res) => {
-        console.log("✅ 发布成功：", res.data)
-        wx.showToast({ title: "发布成功" })
-        // 发布成功后，返回首页
-        setTimeout(() => {
-          wx.navigateBack()
-        }, 1500)
+      url: 'https://你的后端地址/task/publish',
+      method: 'POST',
+      header: {
+        token: token,
+        'content-type': 'application/json'
       },
-      fail: (err) => {
-        console.log("❌ 发布失败：", err)
-        wx.showToast({ title: "发布失败", icon: "none" })
+      data: { content, type },
+      success: (res) => {
+        // 发布成功，奖励5积分
+        const newScore = app.globalData.userInfo.score + 5;
+        app.updateScore(newScore);
+        
+        wx.showToast({ 
+          title: `发布成功！+5积分`, 
+          icon: 'success' 
+        });
+        
+        // 返回首页
+        wx.switchTab({ url: '/pages/index/index' });
+      },
+      fail: () => {
+        wx.showToast({ title: '发布失败', icon: 'none' });
       }
-    })
+    });
   }
-})
+});

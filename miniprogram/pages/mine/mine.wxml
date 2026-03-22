@@ -1,0 +1,42 @@
+<view class="mine-container">
+  <!-- 用户信息+积分卡片 -->
+  <view class="user-card">
+    <view class="avatar-box">
+      <image class="avatar" src="{{userInfo.avatar}}" mode="circle"></image>
+      <view class="nickname">{{userInfo.nickname}}</view>
+    </view>
+    
+    <!-- 积分核心展示 -->
+    <view class="score-box">
+      <view class="score-num">{{userInfo.score}}</view>
+      <view class="score-text">校园积分</view>
+      <button class="score-rule-btn" bindtap="showScoreRule">积分规则</button>
+    </view>
+  </view>
+
+  <!-- 积分记录 -->
+  <view class="score-record">
+    <view class="record-title">积分记录</view>
+    <view class="record-item" wx:for="{{scoreRecord}}" wx:key="id">
+      <view class="record-desc">{{item.desc}}</view>
+      <view class="record-score {{item.type === 'add' ? 'add' : 'reduce'}}">
+        {{item.type === 'add' ? '+' : '-'}}{{item.score}}
+      </view>
+      <view class="record-time">{{item.time}}</view>
+    </view>
+    
+    <view class="empty-record" wx:if="{{scoreRecord.length === 0}}">
+      暂无积分记录
+    </view>
+  </view>
+
+  <!-- 积分规则弹窗 -->
+  <modal title="积分规则" hidden="{{!showRule}}" bindconfirm="hideScoreRule">
+    <view class="rule-content">
+      <view class="rule-item">1. 发布任务：+5积分/次</view>
+      <view class="rule-item">2. 完成接单：+10积分/次</view>
+      <view class="rule-item">3. 违规发布：-20积分/次</view>
+      <view class="rule-item">4. 积分可兑换校园周边、打印券等福利</view>
+    </view>
+  </modal>
+</view>

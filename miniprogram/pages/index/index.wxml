@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="task-card">
+    <view class="task-type">捎带</view>
+    <view class="task-content">去图书馆帮忙带本书</view>
+    <view class="task-info">
+      <text>📍 三教 → 图书馆</text>
+      <text>💰 2 积分</text>
+    </view>
+  </view>
+  <view class="task-card">
+    <view class="task-type">咨询</view>
+    <view class="task-content">离散数学题求大神指点</view>
+    <view class="task-info">
+      <text>📍 二楼咖啡厅</text>
+      <text>💰 5 积分</text>
+    </view>
+  </view>
+</view>

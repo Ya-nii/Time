@@ -1,0 +1,10 @@
+<!-- 发布页面 -->
+<view class="container">
+  <textarea 
+    placeholder="输入你的任务内容..." 
+    bindinput="onInput" 
+    class="input"
+    maxlength="500"
+  ></textarea>
+  <button bindtap="submit" class="submit-btn">发布</button>
+</view>

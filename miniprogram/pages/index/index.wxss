@@ -1,0 +1,26 @@
+.container {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+.task-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+.task-type {
+  font-size: 24rpx;
+  color: #1677ff;
+  margin-bottom: 10rpx;
+}
+.task-content {
+  font-size: 32rpx;
+  margin-bottom: 20rpx;
+}
+.task-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #666;
+}

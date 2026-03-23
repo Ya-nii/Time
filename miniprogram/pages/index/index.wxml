@@ -1,40 +1,37 @@
-<!-- 加载状态 -->
-<view class="loading-container" wx:if="{{loading}}">
-  <view class="loading">正在加载任务...</view>
-</view>
+<!-- 首页整体容器 -->
+<view class="page">
+  <!-- 任务列表区域 -->
+  <view class="task-list">
+    <!-- 加载中状态 -->
+    <view class="loading" wx:if="{{isLoading}}">
+      <text>正在为你匹配合适任务...</text>
+    </view>
 
-<!-- 任务列表 -->
-<view class="container" wx:else>
-  <!-- 任务卡片循环 -->
-  <view class="task-card" wx:for="{{list}}" wx:key="id">
-    <!-- 任务类型标签 -->
-    <view class="task-tag {{item.type}}">
-      {{item.type === 'take' ? '顺路捎带' : item.type === 'ask' ? '咨询求助' : '即时搭伙'}}
+    <!-- 空状态（无匹配任务时显示） -->
+    <view class="empty" wx:elif="{{taskList.length === 0 && !isLoading}}">
+      <text>暂无匹配任务，可点击底部「发布」创建</text>
     </view>
-    
-    <!-- 任务内容 -->
-    <view class="task-content">{{item.content}}</view>
-    
-    <!-- 任务信息 -->
-    <view class="task-info">
-      <view class="task-user">发布者：{{item.nickname}}</view>
-      <view class="task-time">{{item.time}}</view>
-    </view>
-    
-    <!-- 任务操作按钮 -->
-    <view class="task-action">
-      <button class="btn-action" bindtap="acceptTask" data-id="{{item.id}}">
-        接单
-      </button>
-    </view>
-  </view>
 
-  <!-- 空数据状态 -->
-  <view class="empty-container" wx:if="{{list.length === 0 && !loading}}">
-    <view class="empty-icon">📝</view>
-    <view class="empty-text">还没有任务，快去发布吧！</view>
-    <button class="btn-primary" bindtap="goPublish">
-      发布任务
-    </button>
+    <!-- 任务卡片列表（大卡片+单手操作） -->
+    <view 
+      class="task-card" 
+      wx:for="{{taskList}}" 
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <!-- 任务类型标签 -->
+      <view class="task-type">
+        {{item.type === 'take' ? '顺路捎带' : item.type === 'ask' ? '咨询问题' : '紧急求助'}}
+      </view>
+      <!-- 任务内容 -->
+      <view class="task-content">{{item.content}}</view>
+      <!-- 任务信息（步行时间+发布时间） -->
+      <view class="task-info">
+        <text wx:if="{{item.walkTime > 0}}">步行约{{item.walkTime}}分钟</text>
+        <text wx:else>线上咨询</text>
+        <text>{{item.createTime}}</text>
+      </view>
+    </view>
   </view>
 </view>

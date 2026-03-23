@@ -1,0 +1,33 @@
+<view class="course-page">
+  <!-- 页面标题 -->
+  <view class="title">导入课程表</view>
+  
+  <!-- 输入卡片：粘贴课程表文本 -->
+  <view class="input-card">
+    <textarea 
+      placeholder="请粘贴你的课程表文本（比如：08:00-09:40 高等数学）"
+      value="{{importText}}"
+      bindinput="onInput"
+      maxlength="1000"
+    ></textarea>
+    <button class="parse-btn" bindtap="parseCourse">解析课程表</button>
+  </view>
+
+  <!-- 已识别的课程 -->
+  <view class="result-card" wx:if="{{courseList.length > 0}}">
+    <view class="subtitle">已识别课程：</view>
+    <view class="course-item" wx:for="{{courseList}}" wx:key="time">
+      <text class="time">{{item.time}}</text>
+      <text class="name">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- 计算出的空档期 -->
+  <view class="result-card" wx:if="{{freeTime.length > 0}}">
+    <view class="subtitle">你的空档期：</view>
+    <view class="free-item" wx:for="{{freeTime}}" wx:key="*this">
+      {{item}}
+    </view>
+    <button class="save-btn" bindtap="saveFreeTime">保存空档期</button>
+  </view>
+</view>

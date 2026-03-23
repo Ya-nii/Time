@@ -1,0 +1,74 @@
+/* 页面整体 */
+.info-edit-page {
+  background: #f7f8fa;
+  min-height: 100vh;
+  padding: 30rpx;
+}
+
+/* 头像区域 */
+.avatar-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+.label {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.avatar-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-bottom: 10rpx;
+}
+.change-text {
+  font-size: 24rpx;
+  color: #07c160;
+}
+
+/* 表单区域 */
+.form-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+.form-item:last-child {
+  border-bottom: none;
+}
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  width: 120rpx;
+}
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #666;
+  padding-left: 10rpx;
+}
+
+/* 保存按钮 */
+.save-btn {
+  background: #07c160;
+  color: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx 0;
+  font-size: 30rpx;
+}

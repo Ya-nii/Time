@@ -1,101 +1,59 @@
-/* 加载样式 */
-.loading-container {
+/* 页面整体样式 */
+.page {
+  background-color: #f7f8fa; /* 浅灰背景，护眼 */
+  min-height: 100vh;         /* 占满屏幕高度 */
+  padding-bottom: 120rpx;    /* 给底部TabBar留空间 */
+}
+
+/* 任务列表容器 */
+.task-list {
+  padding: 20rpx; /* 左右内边距，避免内容贴边 */
+}
+
+/* 加载中状态 */
+.loading {
   text-align: center;
-  margin-top: 200rpx;
+  padding: 150rpx 0; /* 上下大间距，居中显示 */
+  font-size: 28rpx;
+  color: #999;       /* 浅灰色文字 */
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  padding: 150rpx 0;
+  font-size: 28rpx;
   color: #999;
 }
 
-/* 容器 */
-.container {
-  padding: 20rpx 0;
-}
-
-/* 任务卡片 */
+/* 任务卡片（核心：大卡片+单手操作） */
 .task-card {
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 32rpx;
-  margin: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  background-color: #fff;       /* 白色背景 */
+  border-radius: 24rpx;         /* 大圆角，视觉友好 */
+  padding: 30rpx;               /* 内边距，内容不拥挤 */
+  margin-bottom: 20rpx;         /* 卡片之间的间距 */
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05); /* 轻微阴影，突出卡片 */
 }
 
 /* 任务类型标签 */
-.task-tag {
-  display: inline-block;
-  padding: 6rpx 16rpx;
-  border-radius: 20rpx;
+.task-type {
   font-size: 24rpx;
-  color: #fff;
+  color: #07c160; /* 绿色，醒目且友好 */
   margin-bottom: 16rpx;
-}
-
-/* 不同类型标签颜色 */
-.task-tag.take {
-  background: #34c759;
-}
-.task-tag.ask {
-  background: #ff9500;
-}
-.task-tag.team {
-  background: #007aff;
 }
 
 /* 任务内容 */
 .task-content {
-  font-size: 32rpx;
-  color: #333;
-  line-height: 1.6;
+  font-size: 32rpx;    /* 大号字体，方便步行时查看 */
+  line-height: 1.5;    /* 行高，提升可读性 */
+  color: #333;         /* 深灰色文字，清晰 */
   margin-bottom: 20rpx;
 }
 
-/* 任务信息 */
+/* 任务信息栏（步行时间+发布时间） */
 .task-info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
-  padding-bottom: 16rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.task-user {
-  font-size: 26rpx;
-  color: #666;
-}
-
-.task-time {
+  justify-content: space-between; /* 左右对齐 */
   font-size: 24rpx;
   color: #999;
-}
-
-/* 操作按钮 */
-.task-action {
-  text-align: right;
-}
-
-.btn-action {
-  background: #007aff;
-  color: #fff;
-  border-radius: 50rpx;
-  padding: 12rpx 32rpx;
-  font-size: 28rpx;
-  border: none;
-  line-height: 1.4;
-}
-
-/* 空数据 */
-.empty-container {
-  text-align: center;
-  margin-top: 200rpx;
-}
-
-.empty-icon {
-  font-size: 80rpx;
-  margin-bottom: 20rpx;
-}
-
-.empty-text {
-  font-size: 30rpx;
-  color: #999;
-  margin-bottom: 40rpx;
 }

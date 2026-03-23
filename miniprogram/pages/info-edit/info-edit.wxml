@@ -1,0 +1,71 @@
+<view class="info-edit-page">
+  <!-- 头像修改区域 -->
+  <view class="avatar-section">
+    <view class="label">头像</view>
+    <view class="avatar-box" bindtap="chooseAvatar">
+      <image src="{{userInfo.avatarUrl}}" class="avatar"></image>
+      <text class="change-text">点击更换</text>
+    </view>
+  </view>
+
+  <!-- 表单输入区域 -->
+  <view class="form-section">
+    <!-- 昵称 -->
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入你的昵称"
+        value="{{userInfo.nickName}}"
+        bindinput="inputNickName"
+      />
+    </view>
+
+    <!-- 学校 -->
+    <view class="form-item">
+      <text class="form-label">学校</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入你的学校"
+        value="{{userInfo.school}}"
+        bindinput="inputSchool"
+      />
+    </view>
+
+    <!-- 年级 -->
+    <view class="form-item">
+      <text class="form-label">年级</text>
+      <input 
+        class="form-input" 
+        placeholder="如：2023级"
+        value="{{userInfo.grade}}"
+        bindinput="inputGrade"
+      />
+    </view>
+
+    <!-- 专业 -->
+    <view class="form-item">
+      <text class="form-label">专业</text>
+      <input 
+        class="form-input" 
+        placeholder="如：计算机科学与技术"
+        value="{{userInfo.major}}"
+        bindinput="inputMajor"
+      />
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="form-item">
+      <text class="form-label">联系方式</text>
+      <input 
+        class="form-input" 
+        placeholder="选填：手机号/微信"
+        value="{{userInfo.phone}}"
+        bindinput="inputPhone"
+      />
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <button class="save-btn" bindtap="saveInfo">保存信息</button>
+</view>

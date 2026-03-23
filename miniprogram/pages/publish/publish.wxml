@@ -1,17 +1,37 @@
-<view class="publish-container">
-  <!-- 任务类型选择 -->
-  <view class="type-select">
-    <view class="type-item {{currentType === 'take' ? 'active' : ''}}" bindtap="selectType" data-type="take">顺路捎带</view>
-    <view class="type-item {{currentType === 'ask' ? 'active' : ''}}" bindtap="selectType" data-type="ask">咨询求助</view>
-    <view class="type-item {{currentType === 'team' ? 'active' : ''}}" bindtap="selectType" data-type="team">即时搭伙</view>
+<view class="publish-page">
+  <!-- 任务类型选择器（小按钮） -->
+  <view class="type-selector">
+    <view 
+      class="type-btn {{currentType === item.type ? 'active' : ''}}"
+      wx:for="{{typeList}}" wx:key="type"
+      data-type="{{item.type}}"
+      bindtap="selectType"
+    >
+      {{item.name}}
+    </view>
   </view>
 
-  <!-- 输入区域 -->
-  <textarea class="input-area" placeholder="说点什么吧..." bindinput="onInput" value="{{content}}" maxlength="500"></textarea>
+  <!-- 输入卡片（缩小高度） -->
+  <view class="input-card">
+    <textarea 
+      class="content-input"
+      value="{{content}}"
+      bindinput="onInput"
+      placeholder="可修改模板内容或语音输入"
+      maxlength="200"
+    ></textarea>
+    
+    <!-- 语音按钮（缩小） -->
+    <button 
+      class="voice-btn {{isRecording ? 'recording' : ''}}"
+      bindtap="toggleVoiceInput"
+    >
+      🎤 {{isRecording ? '停止录音' : '语音输入'}}
+    </button>
+  </view>
 
-  <!-- 字数统计 -->
-  <view class="count">{{content.length}} / 500</view>
-
-  <!-- 发布按钮 -->
-  <button class="submit-btn" bindtap="submit" disabled="{{content.length === 0}}">发布任务</button>
+  <!-- 发布按钮（缩小） -->
+  <button class="submit-btn" bindtap="submit">
+    发布任务
+  </button>
 </view>

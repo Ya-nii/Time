@@ -1,126 +1,110 @@
-.mine-container {
-  background: #f8f9fa;
+/* 页面整体：浅灰背景，统一间距 */
+.mine-page {
+  background-color: #f7f8fa;
   min-height: 100vh;
+  padding: 30rpx 25rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
 }
 
-/* 用户信息卡片 */
-.user-card {
-  background: linear-gradient(135deg, #007aff 0%, #5856d6 100%);
-  padding: 40rpx 30rpx;
-  color: #fff;
-  border-radius: 0 0 32rpx 32rpx;
+/* 通用卡片样式 */
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.05);
 }
 
-.avatar-box {
+/* 个人信息大卡片 */
+.big-card {
+  padding: 35rpx 25rpx;
+}
+.user-row {
   display: flex;
   align-items: center;
-  margin-bottom: 30rpx;
+  gap: 20rpx;
 }
-
 .avatar {
-  width: 100rpx;
-  height: 100rpx;
+  width: 90rpx;
+  height: 90rpx;
   border-radius: 50%;
-  background: #fff;
-  margin-right: 20rpx;
+  background-color: #e5e5e5;
 }
-
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
 .nickname {
-  font-size: 32rpx;
+  font-size: 34rpx;
+  color: #333;
   font-weight: 500;
 }
-
-.score-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.desc {
+  font-size: 24rpx;
+  color: #999;
+}
+.edit-btn {
+  width: 130rpx;
+  height: 50rpx;
+  font-size: 24rpx;
+  color: #07c160;
+  background-color: #e8f5e9;
+  border: none;
+  border-radius: 25rpx;
+  padding: 0;
 }
 
-.score-num {
-  font-size: 60rpx;
+/* 积分卡片样式 */
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.score-label {
+  font-size: 28rpx;
+  color: #666;
+}
+.score-value {
+  font-size: 36rpx;
+  color: #07c160;
   font-weight: bold;
 }
 
-.score-text {
-  font-size: 28rpx;
-  margin-left: 10rpx;
+/* 独立功能卡片（核心修改：箭头样式） */
+.func-card {
+  cursor: pointer;
 }
-
-.score-rule-btn {
-  background: rgba(255,255,255,0.3);
-  color: #fff;
-  border: none;
-  border-radius: 20rpx;
-  font-size: 24rpx;
-  padding: 8rpx 16rpx;
-}
-
-/* 积分记录 */
-.score-record {
-  margin: 30rpx;
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
-}
-
-.record-title {
-  font-size: 32rpx;
-  font-weight: 500;
-  margin-bottom: 20rpx;
-  padding-bottom: 10rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.record-item {
+.func-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15rpx 0;
-  border-bottom: 1rpx solid #f8f8f8;
 }
-
-.record-desc {
+.func-text {
   font-size: 28rpx;
   color: #333;
-  flex: 2;
+}
+/* ✨ 箭头调整：加大字号+绿色 */
+.arrow {
+  font-size: 30rpx; /* 从24rpx加大到30rpx */
+  color: #07c160; /* 从灰色改成绿色（和积分同色） */
+  font-weight: bold; /* 加粗更醒目 */
 }
 
-.record-score {
+/* 积分记录卡片样式 */
+.record-row {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+.record-title {
   font-size: 28rpx;
-  flex: 1;
-  text-align: center;
+  color: #333;
+  font-weight: 500;
 }
-
-.record-score.add {
-  color: #34c759;
-}
-
-.record-score.reduce {
-  color: #ff3b30;
-}
-
-.record-time {
-  font-size: 24rpx;
+.record-empty {
+  font-size: 26rpx;
   color: #999;
-  flex: 1;
-  text-align: right;
-}
-
-.empty-record {
-  text-align: center;
-  padding: 40rpx 0;
-  color: #999;
-  font-size: 28rpx;
-}
-
-/* 积分规则弹窗 */
-.rule-content {
-  padding: 20rpx 0;
-}
-
-.rule-item {
-  font-size: 28rpx;
-  line-height: 1.8;
-  color: #666;
 }

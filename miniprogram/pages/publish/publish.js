@@ -1,57 +1,54 @@
-const app = getApp();
+// publish.js 完整代码（含积分功能）
+const app = getApp(); // 必须获取app实例，才能调用全局方法
 
 Page({
-  data: {
-    content: '',
-    currentType: 'take'
+  data: { 
+    content: '', 
+    currentType: 'take' 
   },
 
-  selectType(e) {
-    this.setData({ currentType: e.currentTarget.dataset.type });
+  selectType(e) { 
+    this.setData({ currentType: e.currentTarget.dataset.type }); 
   },
 
-  onInput(e) {
-    this.setData({ content: e.detail.value });
+  onInput(e) { 
+    this.setData({ content: e.detail.value }); 
   },
-
+  
   submit() {
-    const content = this.data.content.trim();
-    const type = this.data.currentType;
-    const token = wx.getStorageSync('token');
-
-    if (!content) {
-      wx.showToast({ title: '请输入内容', icon: 'none' });
-      return;
+    if (!this.data.content.trim()) {
+      return wx.showToast({ title: '请输入内容', icon: 'none' });
     }
+    
+    wx.cloud.init({ 
+      env: wx.cloud.DYNAMIC_CURRENT_ENV,
+      traceUser: true
+    });
 
-    if (!token) {
-      wx.showToast({ title: '请先登录', icon: 'none' });
-      return;
-    }
-
-    wx.request({
-      url: 'https://你的后端地址/task/publish',
-      method: 'POST',
-      header: {
-        token: token,
-        'content-type': 'application/json'
+    wx.cloud.callFunction({
+      name: 'publishPost',
+      data: { 
+        content: this.data.content, 
+        type: this.data.currentType, 
+        userId: 'test' 
       },
-      data: { content, type },
-      success: (res) => {
-        // 发布成功，奖励5积分
-        const newScore = app.globalData.userInfo.score + 5;
-        app.updateScore(newScore);
-        
+      success: () => {
+        // 核心：更新积分（原有积分+5）
+        const oldScore = app.globalData.userInfo.score;
+        const newScore = oldScore + 5;
+        app.updateScore(newScore); // 调用app.js的更新方法
+
+        // 弹出带积分的提示
         wx.showToast({ 
-          title: `发布成功！+5积分`, 
+          title: `发布成功！+5积分，当前${newScore}分`, 
           icon: 'success' 
         });
         
-        // 返回首页
         wx.switchTab({ url: '/pages/index/index' });
       },
-      fail: () => {
-        wx.showToast({ title: '发布失败', icon: 'none' });
+      fail: (err) => {
+        wx.showToast({ title: '失败：' + err.errMsg, icon: 'none' });
+        console.error('云函数调用失败：', err);
       }
     });
   }

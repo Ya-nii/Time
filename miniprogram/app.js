@@ -1,43 +1,35 @@
+// app.js
 App({
-  // 全局数据：token+用户信息+积分
-  globalData: {
-    token: '',
-    userInfo: {
-      nickname: '',
-      avatar: '',
-      score: 0 // 积分字段
-    }
-  },
-
-  // 小程序启动时执行
   onLaunch() {
-    console.log("✅ 小程序启动成功！");
-    
-    // 1. 调用微信登录拿code
-    wx.login({
-      success: (res) => {
-        if (res.code) {
-          console.log("✅ 拿到微信code：", res.code);
-          // 模拟登录成功，同步积分（后续替换成真实接口）
-          this.globalData.token = "test_token_" + res.code;
-          this.globalData.userInfo = {
-            nickname: "校园用户",
-            avatar: "",
-            score: 100 // 初始积分
-          };
-          // 存本地
-          wx.setStorageSync('token', this.globalData.token);
-          wx.setStorageSync('userInfo', this.globalData.userInfo);
-        } else {
-          wx.showToast({ title: '登录失败', icon: 'none' });
-        }
+    // 初始化云开发
+    if (!wx.cloud) {
+      console.error('请使用 2.2.3 或以上版本的基础库以使用云能力');
+    } else {
+      wx.cloud.init({
+        env: wx.cloud.DYNAMIC_CURRENT_ENV,
+        traceUser: true,
+      });
+    }
+
+    // 初始化全局用户数据（包含积分，默认0）
+    this.globalData = {
+      userInfo: {
+        score: 0, // 初始积分0
+        nickName: '测试用户' // 可扩展其他用户信息
       }
-    });
+    };
   },
 
-  // 全局更新积分的方法（所有页面都能调用）
+  // 积分更新方法（核心：修改全局积分）
   updateScore(newScore) {
     this.globalData.userInfo.score = newScore;
-    wx.setStorageSync('userInfo', this.globalData.userInfo);
-  }
+    console.log('当前积分：', this.globalData.userInfo.score); // 控制台打印积分，方便验证
+  },
+
+  // 读取当前积分的方法（可选，方便其他页面调用）
+  getCurrentScore() {
+    return this.globalData.userInfo.score;
+  },
+
+  globalData: {}
 });

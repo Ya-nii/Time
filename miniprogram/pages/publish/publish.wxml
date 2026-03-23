@@ -1,49 +1,17 @@
 <view class="publish-container">
   <!-- 任务类型选择 -->
   <view class="type-select">
-    <view 
-      class="type-item {{currentType === 'take' ? 'active' : ''}}" 
-      bindtap="selectType" 
-      data-type="take"
-    >
-      顺路捎带
-    </view>
-    <view 
-      class="type-item {{currentType === 'ask' ? 'active' : ''}}" 
-      bindtap="selectType" 
-      data-type="ask"
-    >
-      咨询求助
-    </view>
-    <view 
-      class="type-item {{currentType === 'team' ? 'active' : ''}}" 
-      bindtap="selectType" 
-      data-type="team"
-    >
-      即时搭伙
-    </view>
+    <view class="type-item {{currentType === 'take' ? 'active' : ''}}" bindtap="selectType" data-type="take">顺路捎带</view>
+    <view class="type-item {{currentType === 'ask' ? 'active' : ''}}" bindtap="selectType" data-type="ask">咨询求助</view>
+    <view class="type-item {{currentType === 'team' ? 'active' : ''}}" bindtap="selectType" data-type="team">即时搭伙</view>
   </view>
 
   <!-- 输入区域 -->
-  <textarea
-    class="input-area"
-    placeholder="说点什么吧..."
-    bindinput="onInput"
-    value="{{content}}"
-    maxlength="500"
-  ></textarea>
+  <textarea class="input-area" placeholder="说点什么吧..." bindinput="onInput" value="{{content}}" maxlength="500"></textarea>
 
   <!-- 字数统计 -->
-  <view class="count">
-    {{content.length}} / 500
-  </view>
+  <view class="count">{{content.length}} / 500</view>
 
   <!-- 发布按钮 -->
-  <button
-    class="submit-btn"
-    bindtap="submit"
-    disabled="{{!content.trim()}}"
-  >
-    发布任务
-  </button>
+  <button class="submit-btn" bindtap="submit" disabled="{{content.length === 0}}">发布任务</button>
 </view>

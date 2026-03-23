@@ -1,0 +1,9 @@
+<!--pages/test.wxml-->
+<!-- test.wxml：页面结构，放一个按钮和显示结果的区域 -->
+<view class="container">
+  <view class="title">前后端通信测试</view>
+  <!-- 点击这个按钮，就会调用云函数 -->
+  <button bindtap="callCloudFunction">点击调用云函数</button>
+  <!-- 用来显示云函数返回的结果 -->
+  <view class="result">返回结果：{{result}}</view>
+</view>

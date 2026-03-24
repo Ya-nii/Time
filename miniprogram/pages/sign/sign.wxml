@@ -1,0 +1,29 @@
+<view class="sign-page">
+  <view class="page-title">每日签到</view>
+
+  <view class="card score-card">
+    <text class="score-label">当前积分</text>
+    <text class="score-value">{{userInfo.score}}</text>
+  </view>
+
+  <view class="card continuous-card" wx:if="{{continuousDays>0}}">
+    <text class="continuous-text">🔥 连续签到 {{continuousDays}} 天</text>
+    <text class="tip">连续3天+1，连续7天+3</text>
+  </view>
+
+  <view class="btn-box">
+    <button class="sign-btn {{isSigned?'signed':''}}" bindtap="doSign" disabled="{{isSigned}}">
+      {{isSigned ? '今日已签到' : '立即签到 +1 积分'}}
+    </button>
+  </view>
+
+  <view class="card">
+    <text class="title">最近7天签到</text>
+    <view class="calendar">
+      <view class="day {{item.signed?'on':''}}" wx:for="{{signRecord}}" wx:key="date">
+        <text>{{item.day}}</text>
+        <text>{{item.signed?'已签':'未签'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

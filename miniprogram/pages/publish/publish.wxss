@@ -1,75 +1,91 @@
-/* 页面整体：保持浅灰背景 */
 .publish-page {
-  background: #f7f8fa;
+  background-color: #f7f8fa;
   min-height: 100vh;
-  padding: 30rpx 25rpx;
-  display: flex;
-  flex-direction: column;
+  padding: 30rpx;
 }
 
-/* 任务类型选择器：缩小按钮高度 */
-.type-selector {
-  display: flex;
-  gap: 15rpx;
-  margin-bottom: 25rpx;
-}
-.type-btn {
-  flex: 1;
-  padding: 18rpx 0;
+.page-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
   text-align: center;
-  font-size: 26rpx;
-  background: #fff;
-  border-radius: 12rpx;
-  color: #666;
-  box-shadow: 0 1rpx 5rpx rgba(0,0,0,0.05);
-}
-.type-btn.active {
-  background: #07c160;
-  color: #fff;
+  margin-bottom: 40rpx;
 }
 
-/* 输入卡片：缩小高度和内边距 */
-.input-card {
-  flex: 1;
-  max-height: 500rpx; /* 限制卡片最大高度 */
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 25rpx;
-  margin-bottom: 25rpx;
-  box-shadow: 0 1rpx 8rpx rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
+.section-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  display: block;
 }
-.content-input {
+
+.template-section {
+  margin-bottom: 40rpx;
+}
+
+.template-list {
+  display: flex;
+  gap: 20rpx;
+}
+
+.template-item {
   flex: 1;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 25rpx 15rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.template-item.active {
+  background-color: #e8f5e9;
+  border: 2rpx solid #07c160;
+  color: #07c160;
+}
+
+.content-section {
+  margin-bottom: 60rpx;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.task-input {
+  flex: 1;
+  height: 200rpx;
   font-size: 28rpx;
   line-height: 1.5;
-  color: #333;
-  padding: 0;
-  margin-bottom: 20rpx;
-  min-height: 200rpx; /* 缩小输入框高度 */
-}
-.voice-btn {
-  height: 60rpx;
-  font-size: 24rpx;
-  border-radius: 30rpx;
-  background: #f0f0f0;
-  color: #333;
   border: none;
-  padding: 0 30rpx;
-  align-self: center; /* 居中显示，更紧凑 */
-}
-.voice-btn.recording {
-  background: #ff4d4f;
-  color: #fff;
+  outline: none;
+  resize: none;
 }
 
-/* 发布按钮：缩小高度 */
-.submit-btn {
-  height: 70rpx;
-  font-size: 28rpx;
-  border-radius: 35rpx;
-  background: #07c160;
+.voice-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-left: 15rpx;
+}
+
+.publish-btn {
+  width: 100%;
+  height: 90rpx;
+  background-color: #07c160;
   color: #fff;
+  font-size: 32rpx;
+  border-radius: 45rpx;
   border: none;
+}
+
+.publish-btn[disabled] {
+  background-color: #ccc;
 }

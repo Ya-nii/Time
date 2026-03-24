@@ -4,7 +4,8 @@
     "pages/publish/publish",
     "pages/mine/mine",
     "pages/course/course",
-    "pages/info-edit/info-edit" 
+    "pages/info-edit/info-edit",
+    "pages/sign/sign"
   ],
   "window": {
     "backgroundTextStyle": "light",

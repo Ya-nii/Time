@@ -1,0 +1,76 @@
+.sign-page{
+  background:#f7f8fa;
+  min-height:100vh;
+  padding:30rpx 25rpx;
+}
+.page-title{
+  font-size:36rpx;
+  text-align:center;
+  margin-bottom:30rpx;
+  font-weight:bold;
+}
+.card{
+  background:#fff;
+  border-radius:16rpx;
+  padding:25rpx;
+  margin-bottom:20rpx;
+}
+.score-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.score-value{
+  color:#07c160;
+  font-size:36rpx;
+  font-weight:bold;
+}
+.continuous-card{
+  border-left:6rpx solid #07c160;
+  background:#e8f5e9;
+}
+.continuous-text{
+  font-size:30rpx;
+  color:#07c160;
+  font-weight:bold;
+}
+.tip{
+  font-size:24rpx;
+  color:#666;
+  display:block;
+  margin-top:10rpx;
+}
+.btn-box{
+  text-align:center;
+  margin:40rpx 0;
+}
+.sign-btn{
+  width:80%;
+  height:88rpx;
+  border-radius:44rpx;
+  background:#07c160;
+  color:#fff;
+  font-size:32rpx;
+  border:none;
+}
+.sign-btn.signed{
+  background:#ccc;
+  color:#fff;
+}
+.calendar{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20rpx;
+}
+.day{
+  text-align:center;
+  font-size:22rpx;
+  color:#999;
+}
+.day.on{
+  color:#07c160;
+}
+.title{
+  font-size:28rpx;
+  font-weight:bold;
+}

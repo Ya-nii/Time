@@ -1,41 +1,58 @@
 <view class="mine-page">
-  <!-- 1. 个人信息卡片（加大空间） -->
+  <!-- 个人信息卡片 -->
   <view class="card big-card">
     <view class="user-row">
-      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <image class="avatar" src="/images/default-avatar.png"></image>
       <view class="user-info">
-        <text class="nickname">{{userInfo.nickName}}</text>
+        <text class="nickname">{{userInfo.nickName || '未设置昵称'}}</text>
         <text class="desc">完善资料</text>
       </view>
       <button class="edit-btn" bindtap="goToInfoEdit">编辑资料</button>
     </view>
   </view>
 
-  <!-- 2. 积分卡片（长条形） -->
+  <!-- 积分卡片 -->
   <view class="card">
     <view class="score-row">
       <text class="score-label">我的积分</text>
-      <text class="score-value">{{userInfo.score}}</text>
+      <text class="score-value">{{userInfo.score || 0}}</text>
     </view>
   </view>
 
-  <!-- 3. 积分规则（独立长条形） -->
-  <view class="card func-card" bindtap="showScoreRule">
-    <view class="func-row">
-      <text class="func-text">积分规则</text>
-      <text class="arrow">→</text>
+  <!-- 每日签到入口（可跳转） -->
+  <view bindtap="goToSign">
+    <view class="card func-card">
+      <view class="func-row">
+        <text class="func-text">每日签到</text>
+        <view style="display:flex;align-items:center;">
+          <text wx:if="{{continuousDays > 0}}" style="color:#07c160;font-size:24rpx;margin-right:10rpx;">连续{{continuousDays}}天</text>
+          <icon type="arrowright" size="20" color="#07c160"></icon>
+        </view>
+      </view>
     </view>
   </view>
 
-  <!-- 4. 导入课程表（独立长条形） -->
-  <view class="card func-card" bindtap="goToCourse">
-    <view class="func-row">
-      <text class="func-text">导入课程表</text>
-      <text class="arrow">→</text>
+  <!-- 积分规则入口 -->
+  <view bindtap="showScoreRule">
+    <view class="card func-card">
+      <view class="func-row">
+        <text class="func-text">积分规则</text>
+        <icon type="arrowright" size="20" color="#07c160"></icon>
+      </view>
     </view>
   </view>
 
-  <!-- 5. 积分记录（长条形） -->
+  <!-- 导入课程表入口 -->
+  <view bindtap="goToCourse">
+    <view class="card func-card">
+      <view class="func-row">
+        <text class="func-text">导入课程表</text>
+        <icon type="arrowright" size="20" color="#07c160"></icon>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分记录卡片 -->
   <view class="card">
     <view class="record-row">
       <text class="record-title">积分记录</text>

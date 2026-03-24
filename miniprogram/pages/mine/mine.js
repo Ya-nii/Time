@@ -2,108 +2,62 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: {},       // 仅存储全局同步的真实数据
-    scoreRecord: [],    // 空数组，无任何模拟记录
-    showRule: false,    // 弹窗控制
-    hasUserInfo: false  // 授权状态判断
+    userInfo: {},
+    continuousDays: 0
   },
 
   onLoad() {
-    // 初始化：仅同步全局真实数据，无模拟
-    this.syncGlobalData();
-  },
-
-  // 核心：同步全局数据（积分/头像/昵称，100%对齐）
-  syncGlobalData() {
-    const globalUserInfo = app.globalData.userInfo;
     this.setData({
-      userInfo: globalUserInfo,
-      hasUserInfo: !!globalUserInfo.avatarUrl || !!globalUserInfo.nickName
+      userInfo: app.globalData.userInfo || {}
+    });
+    this.getContinuousDays();
+  },
+
+  onShow() {
+    this.getContinuousDays();
+  },
+
+  // 获取连续签到天数
+  getContinuousDays() {
+    const days = wx.getStorageSync('continuousDays') || 0;
+    this.setData({ continuousDays: days });
+  },
+
+  // 跳转编辑资料页
+  goToInfoEdit() {
+    wx.navigateTo({
+      url: '/pages/info-edit/info-edit'
     });
   },
 
-  // 下拉刷新：仅同步最新全局积分，无模拟增减
-  onPullDownRefresh() {
-    this.syncGlobalData(); // 重新同步全局数据
-    wx.stopPullDownRefresh();
-    wx.showToast({ title: "数据已刷新", icon: "success", duration: 1500 });
-  },
-
-  // 头像修改：仅修改真实头像，无模拟
-  chooseAvatar() {
-    const that = this;
-    wx.chooseMedia({
-      count: 1,
-      mediaType: ['image'],
-      sourceType: ['album'],
-      success(res) {
-        const avatarUrl = res.tempFiles[0].tempFilePath;
-        wx.previewImage({
-          urls: [avatarUrl],
-          success() {
-            // 更新全局用户信息，确保所有页面同步
-            const updatedUserInfo = {
-              ...app.globalData.userInfo,
-              avatarUrl: avatarUrl
-            };
-            app.globalData.userInfo = updatedUserInfo;
-            that.setData({
-              userInfo: updatedUserInfo,
-              hasUserInfo: true
-            });
-            wx.showToast({ title: "头像修改成功", icon: "success" });
-          }
-        });
-      },
-      fail(err) {
-        console.error("选择头像失败：", err);
-        wx.showToast({ title: "选择头像失败", icon: "none" });
-      }
-    });
-  },
-
-  // 用户授权：仅获取真实用户信息，无模拟
-  getUserProfile() {
-    const that = this;
-    wx.getUserProfile({
-      desc: '用于完善用户资料',
-      success(res) {
-        const userInfo = res.userInfo;
-        // 合并全局积分（保留100分基础积分）
-        const mergedUserInfo = {
-          ...app.globalData.userInfo,
-          nickName: userInfo.nickName,
-          avatarUrl: userInfo.avatarUrl
-        };
-        app.globalData.userInfo = mergedUserInfo;
-        that.setData({
-          userInfo: mergedUserInfo,
-          hasUserInfo: true
-        });
-        wx.showToast({ title: "授权成功", icon: "success" });
-      },
-      fail() {
-        wx.showToast({ title: "授权失败，无法完善资料", icon: "none" });
-      }
-    });
-  },
-// 新增：跳转到课程表页面
-goToCourse() {
-  wx.navigateTo({
-    url: '/pages/course/course'
-  });
-},
-// 新增：跳转到信息完善页面
-goToInfoEdit() {
-  wx.navigateTo({
-    url: '/pages/info-edit/info-edit'
-  });
-},
-  // 积分规则弹窗控制（纯交互）
+  // 显示积分规则弹窗
   showScoreRule() {
-    this.setData({ showRule: true });
+    wx.showModal({
+      title: '积分规则',
+      content: '发布任务扣除5积分\n完成任务获得10积分\n每日签到获得1积分\n连续签到3天额外+1积分\n连续签到7天额外+3积分',
+      showCancel: false
+    });
   },
-  hideScoreRule() {
-    this.setData({ showRule: false });
+
+  // 跳转课程表页
+  goToCourse() {
+    wx.navigateTo({
+      url: '/pages/course/course'
+    });
+  },
+
+  // 跳转签到页（核心修复）
+  goToSign() {
+    console.log("点击签到，准备跳转至 /pages/sign/sign");
+    wx.navigateTo({
+      url: '/pages/sign/sign',
+      fail: (err) => {
+        console.error("跳转失败：", err);
+        wx.showToast({
+          title: '页面不存在，请先创建签到页',
+          icon: 'none'
+        });
+      }
+    });
   }
 });

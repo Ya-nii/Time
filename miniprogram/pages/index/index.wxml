@@ -1,37 +1,42 @@
-<!-- 首页整体容器 -->
-<view class="page">
-  <!-- 任务列表区域 -->
-  <view class="task-list">
-    <!-- 加载中状态 -->
-    <view class="loading" wx:if="{{isLoading}}">
-      <text>正在为你匹配合适任务...</text>
-    </view>
+<view class="container">
+  <view class="page-title">🎯 任务匹配大厅</view>
 
-    <!-- 空状态（无匹配任务时显示） -->
-    <view class="empty" wx:elif="{{taskList.length === 0 && !isLoading}}">
-      <text>暂无匹配任务，可点击底部「发布」创建</text>
-    </view>
-
-    <!-- 任务卡片列表（大卡片+单手操作） -->
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
     <view 
-      class="task-card" 
-      wx:for="{{taskList}}" 
-      wx:key="id"
-      bindtap="goToDetail"
-      data-id="{{item.id}}"
+      class="filter-item {{currentFilter == item.type ? 'active' : ''}}"
+      wx:for="{{filterList}}"
+      wx:key="type"
+      bindtap="switchFilter"
+      data-type="{{item.type}}"
     >
-      <!-- 任务类型标签 -->
-      <view class="task-type">
-        {{item.type === 'take' ? '顺路捎带' : item.type === 'ask' ? '咨询问题' : '紧急求助'}}
+      {{item.name}}
+    </view>
+  </view>
+
+  <!-- 任务卡片列表 -->
+  <view class="task-list">
+    <view class="card" wx:for="{{taskList}}" wx:key="id">
+      <!-- 标签 -->
+      <view class="tag">{{item.templateLabel || (item.type == 'take' ? '顺路捎带' : item.type == 'ask' ? '即时咨询' : '紧急求助')}}</view>
+      
+      <!-- 内容 -->
+      <view class="content" bindtap="goToDetail" data-id="{{item.id}}">
+        {{item.content}}
       </view>
-      <!-- 任务内容 -->
-      <view class="task-content">{{item.content}}</view>
-      <!-- 任务信息（步行时间+发布时间） -->
-      <view class="task-info">
-        <text wx:if="{{item.walkTime > 0}}">步行约{{item.walkTime}}分钟</text>
-        <text wx:else>线上咨询</text>
+      
+      <!-- 距离 + 时间 -->
+      <view class="info">
+        <text>🚶‍♂️ {{item.walkTime}} 分钟</text>
         <text>{{item.createTime}}</text>
+      </view>
+      
+      <!-- 一键接单按钮 -->
+      <view class="take-btn" bindtap="takeTask" data-id="{{item.id}}">
+        一键接单
       </view>
     </view>
   </view>
+
+  <view wx:if="{{isLoading}}" class="loading">加载中...</view>
 </view>

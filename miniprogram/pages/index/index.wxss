@@ -1,59 +1,79 @@
-/* 页面整体样式 */
-.page {
-  background-color: #f7f8fa; /* 浅灰背景，护眼 */
-  min-height: 100vh;         /* 占满屏幕高度 */
-  padding-bottom: 120rpx;    /* 给底部TabBar留空间 */
+.container{
+  padding: 30rpx;
+  background: #f7f8fa;
+  min-height: 100vh;
+}
+.page-title{
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  color: #222;
 }
 
-/* 任务列表容器 */
-.task-list {
-  padding: 20rpx; /* 左右内边距，避免内容贴边 */
+/* 筛选栏 */
+.filter-bar{
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+.filter-item{
+  padding: 14rpx 28rpx;
+  background: #fff;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  color: #666;
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05);
+}
+.filter-item.active{
+  background: #07C160;
+  color: #fff;
 }
 
-/* 加载中状态 */
-.loading {
-  text-align: center;
-  padding: 150rpx 0; /* 上下大间距，居中显示 */
-  font-size: 28rpx;
-  color: #999;       /* 浅灰色文字 */
+/* 任务卡片 */
+.card{
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.06);
+  position: relative;
 }
-
-/* 空状态 */
-.empty {
-  text-align: center;
-  padding: 150rpx 0;
-  font-size: 28rpx;
-  color: #999;
-}
-
-/* 任务卡片（核心：大卡片+单手操作） */
-.task-card {
-  background-color: #fff;       /* 白色背景 */
-  border-radius: 24rpx;         /* 大圆角，视觉友好 */
-  padding: 30rpx;               /* 内边距，内容不拥挤 */
-  margin-bottom: 20rpx;         /* 卡片之间的间距 */
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05); /* 轻微阴影，突出卡片 */
-}
-
-/* 任务类型标签 */
-.task-type {
+.tag{
+  display: inline-block;
+  background: #E6F7F2;
+  color: #07C160;
   font-size: 24rpx;
-  color: #07c160; /* 绿色，醒目且友好 */
+  padding: 6rpx 16rpx;
+  border-radius: 12rpx;
   margin-bottom: 16rpx;
 }
-
-/* 任务内容 */
-.task-content {
-  font-size: 32rpx;    /* 大号字体，方便步行时查看 */
-  line-height: 1.5;    /* 行高，提升可读性 */
-  color: #333;         /* 深灰色文字，清晰 */
+.content{
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: #333;
   margin-bottom: 20rpx;
 }
-
-/* 任务信息栏（步行时间+发布时间） */
-.task-info {
+.info{
   display: flex;
-  justify-content: space-between; /* 左右对齐 */
+  justify-content: space-between;
   font-size: 24rpx;
+  color: #999;
+  margin-bottom: 24rpx;
+}
+
+/* 一键接单按钮 */
+.take-btn{
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  background: #07C160;
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+}
+.loading{
+  text-align: center;
+  padding: 30rpx;
   color: #999;
 }

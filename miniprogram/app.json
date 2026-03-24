@@ -5,6 +5,8 @@
     "pages/mine/mine",
     "pages/course/course",
     "pages/info-edit/info-edit",
+    "pages/score-detail/score-detail",
+    "pages/verify/verify",
     "pages/sign/sign"
   ],
   "window": {

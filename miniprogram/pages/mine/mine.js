@@ -17,20 +17,17 @@ Page({
     this.getContinuousDays();
   },
 
-  // 获取连续签到天数
   getContinuousDays() {
     const days = wx.getStorageSync('continuousDays') || 0;
     this.setData({ continuousDays: days });
   },
 
-  // 跳转编辑资料页
   goToInfoEdit() {
     wx.navigateTo({
       url: '/pages/info-edit/info-edit'
     });
   },
 
-  // 显示积分规则弹窗
   showScoreRule() {
     wx.showModal({
       title: '积分规则',
@@ -39,25 +36,31 @@ Page({
     });
   },
 
-  // 跳转课程表页
   goToCourse() {
     wx.navigateTo({
       url: '/pages/course/course'
     });
   },
 
-  // 跳转签到页（核心修复）
   goToSign() {
-    console.log("点击签到，准备跳转至 /pages/sign/sign");
     wx.navigateTo({
-      url: '/pages/sign/sign',
-      fail: (err) => {
-        console.error("跳转失败：", err);
-        wx.showToast({
-          title: '页面不存在，请先创建签到页',
-          icon: 'none'
-        });
-      }
+      url: '/pages/sign/sign'
     });
-  }
+  },
+
+  // ========== 你要的就是这两个！ ==========
+  // 积分记录 → 跳积分明细
+  goScoreDetail() {
+    wx.navigateTo({
+      url: '/pages/score-detail/score-detail'
+    })
+  },
+
+  // 校园认证 → 跳认证页
+  goVerify() {
+    wx.navigateTo({
+      url: '/pages/verify/verify'
+    })
+  },
+
 });

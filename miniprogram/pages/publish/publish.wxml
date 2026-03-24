@@ -1,61 +1,37 @@
-<view class="publish-page">
-  <!-- 页面标题 -->
-  <view class="page-title">发布微任务</view>
+<view class="container">
+  <view class="title">发布任务</view>
 
-  <!-- 预设模板选择区（赛题要求：3类模板） -->
-  <view class="template-section">
-    <text class="section-title">选择任务类型</text>
-    <view class="template-list">
-      <view 
-        class="template-item {{currentTemplate.type === 'take' ? 'active' : ''}}"
-        bindtap="selectTemplate"
-        data-type="take"
-        data-label="顺路捎带"
-      >
-        <text>顺路捎带</text>
-      </view>
-      <view 
-        class="template-item {{currentTemplate.type === 'ask' ? 'active' : ''}}"
-        bindtap="selectTemplate"
-        data-type="ask"
-        data-label="即时咨询"
-      >
-        <text>即时咨询</text>
-      </view>
-      <view 
-        class="template-item {{currentTemplate.type === 'team' ? 'active' : ''}}"
-        bindtap="selectTemplate"
-        data-type="team"
-        data-label="紧急求助"
-      >
-        <text>紧急求助</text>
-      </view>
+  <!-- 任务模板 -->
+  <view class="template-group">
+    <view class="template {{currentTemplate.type === 'take' ? 'active' : ''}}"
+      bindtap="selectTemplate"
+      data-type="take"
+      data-label="顺路捎带">
+      顺路捎带
+    </view>
+    <view class="template {{currentTemplate.type === 'ask' ? 'active' : ''}}"
+      bindtap="selectTemplate"
+      data-type="ask"
+      data-label="即时咨询">
+      即时咨询
+    </view>
+    <view class="template {{currentTemplate.type === 'team' ? 'active' : ''}}"
+      bindtap="selectTemplate"
+      data-type="team"
+      data-label="紧急求助">
+      紧急求助
     </view>
   </view>
 
-  <!-- 任务内容输入区（支持语音输入） -->
-  <view class="content-section">
-    <text class="section-title">任务内容</text>
-    <view class="input-wrapper">
-      <textarea 
-        class="task-input" 
-        placeholder="请输入任务详情，或点击右侧麦克风语音输入"
-        value="{{taskContent}}"
-        bindinput="onInput"
-      ></textarea>
-      <view class="voice-btn" bindtap="startVoice">
-        <text>🎤</text>
-      </view>
-    </view>
-  </view>
+  <!-- 输入框 -->
+  <textarea class="input"
+    value="{{taskContent}}"
+    bindinput="onInput"
+    placeholder="请填写任务详情">
+  </textarea>
 
-  <!-- 发布按钮（大按钮，单手操作友好） -->
-  <button 
-    class="publish-btn" 
-    bindtap="onPublishTask"
-    disabled="{{isPublishing}}"
-    loading="{{isPublishing}}"
-  >
-    发布{{currentTemplate.label}}
+  <!-- 发布按钮 -->
+  <button class="publish-btn" bindtap="onPublishTask">
+    发布任务
   </button>
 </view>

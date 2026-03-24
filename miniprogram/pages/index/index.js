@@ -1,87 +1,120 @@
 const app = getApp();
 
-// 所有页面方法必须包裹在 Page({}) 内部！
 Page({
-  // 页面初始数据
   data: {
-    taskList: [],    // 任务列表（时空匹配后的结果）
-    isLoading: false // 加载状态
+    taskList: [],
+    allTasks: [],
+    isLoading: false,
+
+    // 筛选栏
+    filterList: [
+      { name: '全部', type: 'all' },
+      { name: '顺路捎带', type: 'take' },
+      { name: '即时咨询', type: 'ask' },
+      { name: '紧急求助', type: 'team' }
+    ],
+    currentFilter: 'all',
   },
 
-  // 页面加载时自动执行
   onLoad() {
-    this.loadMatchedTasks(); // 加载匹配的任务
+    this.loadMatchedTasks();
   },
 
-  // 下拉刷新时执行
   onPullDownRefresh() {
     this.loadMatchedTasks(true);
   },
 
-  // 核心：智能时空匹配（筛选空档期+步行≤5分钟的任务）
-  loadMatchedTasks(isRefresh = false) {
-    this.setData({ isLoading: true }); // 显示加载状态
-
-    // 1. 获取全局用户数据（空档期+位置）
-    const user = app.globalData.userInfo;
-    // 给空档期设置默认值，避免报错
-    const userFreeTime = user.freeTime || ['09:50-11:30', '14:00-15:40'];
-
-    // 2. 模拟校园任务池（纯前端示例，无需后端）
-    const allTasks = [
-      {
-        id: 1,
-        type: 'take',        // 顺路捎带
-        content: '去食堂顺便帮带一份水果捞，有偿！',
-        walkTime: 3,         // 步行3分钟
-        createTime: '2026-03-24 10:00',
-        timeSlot: '09:50-11:30' // 任务时间段
-      },
-      {
-        id: 2,
-        type: 'ask',         // 咨询问题
-        content: '离散数学第5章错题求讲解，线上即可！',
-        walkTime: 0,         // 咨询类无步行时间
-        createTime: '2026-03-24 09:40',
-        timeSlot: '08:00-09:40'
-      },
-      {
-        id: 3,
-        type: 'help',        // 紧急求助
-        content: '三教302教室有人吗？帮忙看一下座位情况！',
-        walkTime: 2,
-        createTime: '2026-03-24 14:20',
-        timeSlot: '14:00-15:40'
-      }
-    ];
-
-    // 3. 智能筛选：只保留「空档期内」+「步行≤5分钟」的任务
-    const matchedTasks = allTasks.filter(task => {
-      const isInFreeTime = userFreeTime.includes(task.timeSlot);
-      const isWalkTimeValid = task.walkTime <= 5;
-      return isInFreeTime && isWalkTimeValid;
-    });
-
-    // 4. 更新页面数据，结束加载
-    this.setData({
-      taskList: matchedTasks,
-      isLoading: false
-    });
-
-    // 5. 停止下拉刷新
-    if (isRefresh) {
-      wx.stopPullDownRefresh();
-    }
+  // 切换筛选
+  switchFilter(e) {
+    const filterType = e.currentTarget.dataset.type;
+    this.setData({ currentFilter: filterType });
+    this.doFilter();
   },
 
-  // 点击任务卡片（跳转详情页，先提示）
+  // 筛选逻辑
+  doFilter() {
+    const { allTasks, currentFilter } = this.data;
+    let filteredTasks = allTasks;
+
+    if (currentFilter !== 'all') {
+      filteredTasks = allTasks.filter(item => item.type === currentFilter);
+    }
+
+    // 按步行时间（距离）升序：最近的排最前
+    filteredTasks.sort((a, b) => a.walkTime - b.walkTime);
+
+    this.setData({ taskList: filteredTasks });
+  },
+
+  // 加载匹配任务（你原有逻辑完整保留）
+  loadMatchedTasks(isRefresh = false) {
+    this.setData({ isLoading: true });
+
+    const user = app.globalData.userInfo;
+    const userFreeTime = user?.freeTime || ['09:50-11:30', '14:00-15:40'];
+
+    // 你原来的本地模拟任务
+    const localTasks = [
+      { id: 1, type: 'take', content: '去食堂顺便帮带一份水果捞，有偿！', walkTime: 3, createTime: '2026-03-24 10:00', timeSlot: '09:50-11:30' },
+      { id: 2, type: 'ask', content: '离散数学第5章错题求讲解，线上即可！', walkTime: 0, createTime: '2026-03-24 09:40', timeSlot: '08:00-09:40' },
+      { id: 3, type: 'team', content: '三教302有人吗？帮忙看一下座位！', walkTime: 2, createTime: '2026-03-24 14:20', timeSlot: '14:00-15:40' }
+    ];
+
+    // 读取你发布的真实任务
+    wx.cloud.database().collection('tasks')
+      .orderBy('createTime', 'desc')
+      .get()
+      .then(res => {
+        let cloudTasks = res.data || [];
+        let formattedTasks = cloudTasks.map(item => ({
+          id: item._id,
+          type: item.templateType,
+          content: item.content,
+          templateLabel: item.templateLabel,
+          createTime: item.createTime ? new Date(item.createTime).toLocaleString() : '刚刚',
+          timeSlot: userFreeTime[0],
+          walkTime: 3
+        }));
+
+        let allTasks = [...localTasks, ...formattedTasks];
+
+        // 时空匹配逻辑（保留）
+        const matchedTasks = allTasks.filter(task => {
+          const isInFreeTime = userFreeTime.includes(task.timeSlot);
+          const isWalkTimeValid = task.walkTime <= 5;
+          return isInFreeTime && isWalkTimeValid;
+        });
+
+        this.setData({ allTasks: matchedTasks });
+        this.doFilter();
+        this.setData({ isLoading: false });
+        if (isRefresh) wx.stopPullDownRefresh();
+      })
+      .catch(err => {
+        console.error('加载失败', err);
+        this.setData({ isLoading: false });
+        if (isRefresh) wx.stopPullDownRefresh();
+      });
+  },
+
+  // 一键接单（核心功能）
+  takeTask(e) {
+    const taskId = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '确认接单',
+      content: '确定要接下这个任务吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({ title: '接单成功！', icon: 'success' });
+          // 这里可对接后端更新任务状态
+        }
+      }
+    });
+  },
+
+  // 查看详情
   goToDetail(e) {
     const taskId = e.currentTarget.dataset.id;
-    wx.showToast({
-      title: `查看任务${taskId}详情`,
-      icon: 'none'
-    });
-    // 如需跳转详情页，先创建detail页面后打开下面注释
-    // wx.navigateTo({ url: `/pages/detail/detail?id=${taskId}` });
+    wx.showToast({ title: `任务${taskId}`, icon: 'none' });
   }
 });

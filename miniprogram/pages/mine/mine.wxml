@@ -42,6 +42,16 @@
     </view>
   </view>
 
+  <!-- 校园认证 -->
+  <view bindtap="goVerify">
+    <view class="card func-card">
+      <view class="func-row">
+        <text class="func-text">校园认证</text>
+        <icon type="arrowright" size="20" color="#07c160"></icon>
+      </view>
+    </view>
+  </view>
+
   <!-- 导入课程表入口 -->
   <view bindtap="goToCourse">
     <view class="card func-card">
@@ -52,11 +62,13 @@
     </view>
   </view>
 
-  <!-- 积分记录卡片 -->
-  <view class="card">
-    <view class="record-row">
-      <text class="record-title">积分记录</text>
-      <text class="record-empty">暂无积分变动记录</text>
+  <!-- 积分记录卡片 → 现在可以点了！跳转到积分明细！ -->
+  <view bindtap="goScoreDetail">
+    <view class="card">
+      <view class="record-row">
+        <text class="record-title">积分记录</text>
+        <text class="record-empty">暂无积分变动记录</text>
+      </view>
     </view>
   </view>
 </view>

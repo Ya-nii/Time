@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="title">积分明细</view>
+
+  <view class="item" wx:for="{{scoreList}}" wx:key="index">
+    <view>{{item.title}}</view>
+    <view style="color:{{item.score.startsWith('+')?'#07c160':'red'}}">
+      {{item.score}}
+    </view>
+  </view>
+</view>

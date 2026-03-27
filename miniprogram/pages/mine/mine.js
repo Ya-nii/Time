@@ -48,7 +48,6 @@ Page({
     });
   },
 
-  // ========== 你要的就是这两个！ ==========
   // 积分记录 → 跳积分明细
   goScoreDetail() {
     wx.navigateTo({
@@ -62,5 +61,12 @@ Page({
       url: '/pages/verify/verify'
     })
   },
+
+  // ✅ 我的任务 → 跳任务中心
+  goToMyTask() {
+    wx.navigateTo({
+      url: '/pages/myTask/myTask'
+    })
+  }
 
 });

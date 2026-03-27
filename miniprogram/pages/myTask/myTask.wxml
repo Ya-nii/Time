@@ -1,0 +1,27 @@
+<view class="container">
+  <!-- 顶部切换 -->
+  <view class="tabs">
+    <view class="tab {{currentTab===0?'active':''}}" bindtap="switchTab" data-index="0">
+      我发布的
+    </view>
+    <view class="tab {{currentTab===1?'active':''}}" bindtap="switchTab" data-index="1">
+      我接受的
+    </view>
+    <view class="tab {{currentTab===2?'active':''}}" bindtap="switchTab" data-index="2">
+      已完成
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list">
+    <view class="item" wx:for="{{taskList}}" wx:key="id">
+      <view class="tag">{{item.tag}}</view>
+      <view class="content">{{item.content}}</view>
+      <view class="status">{{item.status}}</view>
+    </view>
+
+    <view class="empty" wx:if="{{taskList.length===0}}">
+      暂无任务
+    </view>
+  </view>
+</view>

@@ -1,0 +1,48 @@
+.container{
+  padding: 20rpx;
+  background: #f7f8fa;
+  min-height: 100vh;
+}
+.tabs{
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 30rpx;
+}
+.tab{
+  flex:1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+}
+.tab.active{
+  background: #07C160;
+  color:#fff;
+}
+
+.item{
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+.tag{
+  color:#07C160;
+  font-size:24rpx;
+  margin-bottom:10rpx;
+}
+.content{
+  font-size:28rpx;
+  margin-bottom:10rpx;
+}
+.status{
+  font-size:24rpx;
+  color:#999;
+}
+.empty{
+  text-align: center;
+  padding:60rpx 0;
+  color:#999;
+}

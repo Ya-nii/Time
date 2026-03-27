@@ -61,13 +61,20 @@
       </view>
     </view>
   </view>
-
+<!-- 我的任务 -->
+<view bindtap="goToMyTask">
+  <view class="card func-card">
+    <view class="func-row">
+      <text class="func-text">我的任务</text>
+      <icon type="arrowright" size="20" color="#07c160"></icon>
+    </view>
+  </view>
+</view>
   <!-- 积分记录卡片 → 现在可以点了！跳转到积分明细！ -->
   <view bindtap="goScoreDetail">
     <view class="card">
       <view class="record-row">
         <text class="record-title">积分记录</text>
-        <text class="record-empty">暂无积分变动记录</text>
       </view>
     </view>
   </view>

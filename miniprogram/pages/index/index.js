@@ -5,7 +5,6 @@ Page({
     taskList: [],
     allTasks: [],
     isLoading: false,
-
     filterList: [
       { name: '全部', type: 'all' },
       { name: '顺路捎带', type: 'take' },
@@ -15,7 +14,7 @@ Page({
     currentFilter: 'all',
   },
 
-  onLoad() {
+  onShow() {
     this.loadMatchedTasks();
   },
 
@@ -24,92 +23,57 @@ Page({
   },
 
   switchFilter(e) {
-    const filterType = e.currentTarget.dataset.type;
-    this.setData({ currentFilter: filterType });
+    this.setData({ currentFilter: e.currentTarget.dataset.type });
     this.doFilter();
   },
 
   doFilter() {
     const { allTasks, currentFilter } = this.data;
-    let filteredTasks = allTasks;
-
+    let filtered = allTasks;
     if (currentFilter !== 'all') {
-      filteredTasks = allTasks.filter(item => item.type === currentFilter);
+      filtered = allTasks.filter(item => item.templateType === currentFilter);
     }
-
-    filteredTasks.sort((a, b) => a.walkTime - b.walkTime);
-    this.setData({ taskList: filteredTasks });
+    this.setData({ taskList: filtered });
   },
 
-  // ===================== 云端真实数据（完整版） =====================
   loadMatchedTasks(isRefresh = false) {
     this.setData({ isLoading: true });
 
-    const user = app.globalData.userInfo;
-    const userFreeTime = user?.freeTime || ['09:50-11:30', '14:00-15:40'];
-
     const localTasks = [
-      { id: 1, type: 'take', content: '去食堂顺便帮带一份水果捞，有偿！', walkTime: 3, createTime: '2026-03-24 10:00', timeSlot: '09:50-11:30' },
-      { id: 2, type: 'ask', content: '离散数学第5章错题求讲解，线上即可！', walkTime: 0, createTime: '2026-03-24 09:40', timeSlot: '08:00-09:40' },
-      { id: 3, type: 'team', content: '三教302有人吗？帮忙看一下座位！', walkTime: 2, createTime: '2026-03-24 14:20', timeSlot: '14:00-15:40' }
+      { id: 1, templateType: 'take', templateLabel: '顺路捎带', content: '测试任务', walkTime: 3, createTime: '2026-03-24' },
     ];
 
-    // ✅ 调用你已有的云函数 publishTask 来获取数据
     wx.cloud.callFunction({
       name: "publishTask",
       data: { action: "getList" },
       success: res => {
-        console.log("云端数据：", res);
+        console.log("最终数据：", res);
 
-        let cloudTasks = res.result.data || [];
-        let formattedTasks = cloudTasks.map(item => ({
+        // ✅ 暴力兼容所有格式
+        let cloudTasks = res.result?.data || res.data || [];
+
+        let tasks = cloudTasks.map(item => ({
           id: item._id,
-          type: item.templateType,
-          content: item.content,
+          templateType: item.templateType,
           templateLabel: item.templateLabel,
-          createTime: item.createTime ? new Date(item.createTime).toLocaleString() : '刚刚',
-          timeSlot: userFreeTime[0],
-          walkTime: 3
+          content: item.content,
+          walkTime: 3,
+          createTime: item.createTime ? new Date(item.createTime).toLocaleString() : '刚刚'
         }));
 
-        let allTasks = [...localTasks, ...formattedTasks];
-        const matchedTasks = allTasks.filter(task => {
-          const isInFreeTime = userFreeTime.includes(task.timeSlot);
-          const isWalkTimeValid = task.walkTime <= 5;
-          return isInFreeTime && isWalkTimeValid;
-        });
-
-        this.setData({ allTasks: matchedTasks });
-        this.doFilter();
-        this.setData({ isLoading: false });
-        if (isRefresh) wx.stopPullDownRefresh();
+        let allTasks = [...localTasks, ...tasks];
+        this.setData({ allTasks, taskList: allTasks });
       },
-      fail: err => {
-        console.error("加载失败（使用本地数据）", err);
-        // 失败时只显示本地数据
-        this.setData({ allTasks: localTasks });
-        this.doFilter();
+      fail: () => {
+        this.setData({ allTasks: localTasks, taskList: localTasks });
+      },
+      complete: () => {
         this.setData({ isLoading: false });
         if (isRefresh) wx.stopPullDownRefresh();
       }
     });
   },
 
-  takeTask(e) {
-    const taskId = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: '确认接单',
-      content: '确定要接下这个任务吗？',
-      success: (res) => {
-        if (res.confirm) {
-          wx.showToast({ title: '接单成功！', icon: 'success' });
-        }
-      }
-    });
-  },
-
-  goToDetail(e) {
-    const taskId = e.currentTarget.dataset.id;
-    wx.showToast({ title: `任务${taskId}`, icon: 'none' });
-  }
+  takeTask() { wx.showToast({ title: '接单成功' }) },
+  goToDetail() {}
 });

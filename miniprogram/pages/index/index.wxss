@@ -10,7 +10,6 @@
   color: #222;
 }
 
-/* 筛选栏 */
 .filter-bar{
   display: flex;
   gap: 20rpx;
@@ -29,7 +28,6 @@
   color: #fff;
 }
 
-/* 任务卡片 */
 .card{
   background: #fff;
   border-radius: 24rpx;
@@ -61,7 +59,6 @@
   margin-bottom: 24rpx;
 }
 
-/* 一键接单按钮 */
 .take-btn{
   width: 100%;
   height: 72rpx;

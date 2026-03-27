@@ -26,14 +26,10 @@ Page({
     taskContent: "我要去{地点}，{时间}顺路，可帮忙捎带小件物品~",
   },
 
-  // 输入任务内容
   onInput(e) {
-    this.setData({
-      taskContent: e.detail.value
-    })
+    this.setData({ taskContent: e.detail.value })
   },
 
-  // 选择模板并自动填充文字
   selectTemplate(e) {
     const type = e.currentTarget.dataset.type;
     const label = e.currentTarget.dataset.label;
@@ -46,15 +42,29 @@ Page({
     });
   },
 
-  // 发布任务（对接队友后端）
+  getLocation() {
+    wx.showLoading({ title: '定位中...' })
+    wx.getLocation({
+      type: 'gcj02',
+      success: (res) => {
+        let address = `(${res.latitude.toFixed(4)}, ${res.longitude.toFixed(4)})`
+        let newContent = this.data.taskContent.replace(/\{地点\}/g, address)
+        this.setData({ taskContent: newContent })
+        wx.hideLoading()
+        wx.showToast({ title: '定位成功' })
+      },
+      fail: () => {
+        wx.hideLoading()
+        wx.showToast({ title: '定位失败', icon: 'none' })
+      }
+    })
+  },
+
   onPublishTask() {
     const { currentTemplate, taskContent } = this.data;
 
-    if (!taskContent || taskContent.trim() === "") {
-      wx.showToast({
-        title: "请输入任务内容",
-        icon: "none"
-      });
+    if (!taskContent.trim()) {
+      wx.showToast({ title: "请输入任务内容", icon: "none" });
       return;
     }
 
@@ -70,24 +80,16 @@ Page({
       success: (res) => {
         wx.hideLoading();
         if (res.result.success) {
-          wx.showToast({
-            title: "任务发布成功！",
-            icon: "success"
-          });
+          wx.showToast({ title: "发布成功！", icon: "success" });
           this.setData({ taskContent: "" });
+          wx.switchTab({ url: "/pages/index/index" });
         } else {
-          wx.showToast({
-            title: res.result.errMsg,
-            icon: "none"
-          });
+          wx.showToast({ title: res.result.errMsg, icon: "none" });
         }
       },
       fail: () => {
         wx.hideLoading();
-        wx.showToast({
-          title: "发布失败，请重试",
-          icon: "none"
-        });
+        wx.showToast({ title: "发布失败", icon: "none" });
       }
     });
   }

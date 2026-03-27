@@ -18,7 +18,7 @@
   <view class="task-list">
     <view class="card" wx:for="{{taskList}}" wx:key="id">
       <!-- 标签 -->
-      <view class="tag">{{item.templateLabel || (item.type == 'take' ? '顺路捎带' : item.type == 'ask' ? '即时咨询' : '紧急求助')}}</view>
+      <view class="tag">{{item.templateLabel}}</view>
       
       <!-- 内容 -->
       <view class="content" bindtap="goToDetail" data-id="{{item.id}}">

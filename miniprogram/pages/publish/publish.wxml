@@ -1,37 +1,50 @@
 <view class="container">
-  <view class="title">发布任务</view>
+  <!-- 顶部标题 -->
+  <view class="header">
+    <text class="title">发布任务</text>
+  </view>
 
-  <!-- 任务模板 -->
-  <view class="template-group">
-    <view class="template {{currentTemplate.type === 'take' ? 'active' : ''}}"
-      bindtap="selectTemplate"
-      data-type="take"
-      data-label="顺路捎带">
-      顺路捎带
-    </view>
-    <view class="template {{currentTemplate.type === 'ask' ? 'active' : ''}}"
-      bindtap="selectTemplate"
-      data-type="ask"
-      data-label="即时咨询">
-      即时咨询
-    </view>
-    <view class="template {{currentTemplate.type === 'team' ? 'active' : ''}}"
-      bindtap="selectTemplate"
-      data-type="team"
-      data-label="紧急求助">
-      紧急求助
+  <!-- 任务类型选择 -->
+  <view class="template-card">
+    <view class="template-group">
+      <view class="template {{currentTemplate.type === 'take' ? 'active' : ''}}"
+        bindtap="selectTemplate"
+        data-type="take"
+        data-label="顺路捎带">
+        顺路捎带
+      </view>
+      <view class="template {{currentTemplate.type === 'ask' ? 'active' : ''}}"
+        bindtap="selectTemplate"
+        data-type="ask"
+        data-label="即时咨询">
+        即时咨询
+      </view>
+      <view class="template {{currentTemplate.type === 'team' ? 'active' : ''}}"
+        bindtap="selectTemplate"
+        data-type="team"
+        data-label="紧急求助">
+        紧急求助
+      </view>
     </view>
   </view>
 
-  <!-- 输入框 -->
-  <textarea class="input"
-    value="{{taskContent}}"
-    bindinput="onInput"
-    placeholder="请填写任务详情">
-  </textarea>
+  <!-- 任务内容输入区 -->
+  <view class="input-card">
+    <textarea class="task-input"
+      value="{{taskContent}}"
+      bindinput="onInput"
+      placeholder="请填写任务详情">
+    </textarea>
+    <!-- 定位图标（放在输入框右下角） -->
+    <view class="location-icon" bindtap="getLocation">
+      📍
+    </view>
+  </view>
 
   <!-- 发布按钮 -->
-  <button class="publish-btn" bindtap="onPublishTask">
-    发布任务
-  </button>
+  <view class="publish-area">
+    <button class="publish-btn" bindtap="onPublishTask">
+      发布任务
+    </button>
+  </view>
 </view>

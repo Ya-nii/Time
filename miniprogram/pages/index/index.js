@@ -6,7 +6,6 @@ Page({
     allTasks: [],
     isLoading: false,
 
-    // 筛选栏
     filterList: [
       { name: '全部', type: 'all' },
       { name: '顺路捎带', type: 'take' },
@@ -24,14 +23,12 @@ Page({
     this.loadMatchedTasks(true);
   },
 
-  // 切换筛选
   switchFilter(e) {
     const filterType = e.currentTarget.dataset.type;
     this.setData({ currentFilter: filterType });
     this.doFilter();
   },
 
-  // 筛选逻辑
   doFilter() {
     const { allTasks, currentFilter } = this.data;
     let filteredTasks = allTasks;
@@ -40,32 +37,31 @@ Page({
       filteredTasks = allTasks.filter(item => item.type === currentFilter);
     }
 
-    // 按步行时间（距离）升序：最近的排最前
     filteredTasks.sort((a, b) => a.walkTime - b.walkTime);
-
     this.setData({ taskList: filteredTasks });
   },
 
-  // 加载匹配任务（你原有逻辑完整保留）
+  // ===================== 云端真实数据（完整版） =====================
   loadMatchedTasks(isRefresh = false) {
     this.setData({ isLoading: true });
 
     const user = app.globalData.userInfo;
     const userFreeTime = user?.freeTime || ['09:50-11:30', '14:00-15:40'];
 
-    // 你原来的本地模拟任务
     const localTasks = [
       { id: 1, type: 'take', content: '去食堂顺便帮带一份水果捞，有偿！', walkTime: 3, createTime: '2026-03-24 10:00', timeSlot: '09:50-11:30' },
       { id: 2, type: 'ask', content: '离散数学第5章错题求讲解，线上即可！', walkTime: 0, createTime: '2026-03-24 09:40', timeSlot: '08:00-09:40' },
       { id: 3, type: 'team', content: '三教302有人吗？帮忙看一下座位！', walkTime: 2, createTime: '2026-03-24 14:20', timeSlot: '14:00-15:40' }
     ];
 
-    // 读取你发布的真实任务
-    wx.cloud.database().collection('tasks')
-      .orderBy('createTime', 'desc')
-      .get()
-      .then(res => {
-        let cloudTasks = res.data || [];
+    // ✅ 调用你已有的云函数 publishTask 来获取数据
+    wx.cloud.callFunction({
+      name: "publishTask",
+      data: { action: "getList" },
+      success: res => {
+        console.log("云端数据：", res);
+
+        let cloudTasks = res.result.data || [];
         let formattedTasks = cloudTasks.map(item => ({
           id: item._id,
           type: item.templateType,
@@ -77,8 +73,6 @@ Page({
         }));
 
         let allTasks = [...localTasks, ...formattedTasks];
-
-        // 时空匹配逻辑（保留）
         const matchedTasks = allTasks.filter(task => {
           const isInFreeTime = userFreeTime.includes(task.timeSlot);
           const isWalkTimeValid = task.walkTime <= 5;
@@ -89,15 +83,18 @@ Page({
         this.doFilter();
         this.setData({ isLoading: false });
         if (isRefresh) wx.stopPullDownRefresh();
-      })
-      .catch(err => {
-        console.error('加载失败', err);
+      },
+      fail: err => {
+        console.error("加载失败（使用本地数据）", err);
+        // 失败时只显示本地数据
+        this.setData({ allTasks: localTasks });
+        this.doFilter();
         this.setData({ isLoading: false });
         if (isRefresh) wx.stopPullDownRefresh();
-      });
+      }
+    });
   },
 
-  // 一键接单（核心功能）
   takeTask(e) {
     const taskId = e.currentTarget.dataset.id;
     wx.showModal({
@@ -106,13 +103,11 @@ Page({
       success: (res) => {
         if (res.confirm) {
           wx.showToast({ title: '接单成功！', icon: 'success' });
-          // 这里可对接后端更新任务状态
         }
       }
     });
   },
 
-  // 查看详情
   goToDetail(e) {
     const taskId = e.currentTarget.dataset.id;
     wx.showToast({ title: `任务${taskId}`, icon: 'none' });

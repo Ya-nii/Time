@@ -1,12 +1,9 @@
 <view class="container">
-  <view class="page-title">🎯 任务匹配大厅</view>
-
-  <!-- 筛选栏 -->
-  <view class="filter-bar">
+  <view class="filter">
     <view 
+      wx:for="{{filterList}}" 
+      wx:key="type" 
       class="filter-item {{currentFilter == item.type ? 'active' : ''}}"
-      wx:for="{{filterList}}"
-      wx:key="type"
       bindtap="switchFilter"
       data-type="{{item.type}}"
     >
@@ -14,29 +11,24 @@
     </view>
   </view>
 
-  <!-- 任务卡片列表 -->
   <view class="task-list">
-    <view class="card" wx:for="{{taskList}}" wx:key="id">
-      <!-- 标签 -->
-      <view class="tag">{{item.templateLabel}}</view>
-      
-      <!-- 内容 -->
-      <view class="content" bindtap="goToDetail" data-id="{{item.id}}">
-        {{item.content}}
-      </view>
-      
-      <!-- 距离 + 时间 -->
-      <view class="info">
-        <text>🚶‍♂️ {{item.walkTime}} 分钟</text>
-        <text>{{item.createTime}}</text>
-      </view>
-      
-      <!-- 一键接单按钮 -->
-      <view class="take-btn" bindtap="takeTask" data-id="{{item.id}}">
-        一键接单
-      </view>
+    <view 
+      class="task-item"
+      wx:for="{{taskList}}" 
+      wx:key="id"
+    >
+      <view class="task-label">{{item.templateLabel}}</view>
+      <view class="task-content">{{item.content}}</view>
+      <view class="task-time">{{item.createTime}}</view>
+
+      <!-- 我已经帮你绑好 id 了！直接用！-->
+      <button 
+        class="take-btn"
+        bindtap="takeTask" 
+        data-id="{{item.id}}"
+      >
+        接单
+      </button>
     </view>
   </view>
-
-  <view wx:if="{{isLoading}}" class="loading">加载中...</view>
 </view>

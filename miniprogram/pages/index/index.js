@@ -36,24 +36,19 @@ Page({
     this.setData({ taskList: filtered });
   },
 
+  // 加载真实任务（已删除假数据，避免报错）
   loadMatchedTasks(isRefresh = false) {
     this.setData({ isLoading: true });
 
-    const localTasks = [
-      { id: 1, templateType: 'take', templateLabel: '顺路捎带', content: '测试任务', walkTime: 3, createTime: '2026-03-24' },
-    ];
-
     wx.cloud.callFunction({
       name: "publishTask",
-      data: { action: "getList" },
+      data: { action: "getPendingList" }, // 注意大写L，和后端一致
       success: res => {
-        console.log("最终数据：", res);
-
-        // ✅ 暴力兼容所有格式
-        let cloudTasks = res.result?.data || res.data || [];
+        console.log("后端返回数据：", res.result);
+        let cloudTasks = res.result?.data || [];
 
         let tasks = cloudTasks.map(item => ({
-          id: item._id,
+          id: item._id, // 用数据库真实_id
           templateType: item.templateType,
           templateLabel: item.templateLabel,
           content: item.content,
@@ -61,11 +56,11 @@ Page({
           createTime: item.createTime ? new Date(item.createTime).toLocaleString() : '刚刚'
         }));
 
-        let allTasks = [...localTasks, ...tasks];
-        this.setData({ allTasks, taskList: allTasks });
+        this.setData({ allTasks: tasks, taskList: tasks });
+        this.doFilter(); // 筛选生效
       },
       fail: () => {
-        this.setData({ allTasks: localTasks, taskList: localTasks });
+        wx.showToast({ title: "加载失败", icon: "none" });
       },
       complete: () => {
         this.setData({ isLoading: false });
@@ -74,6 +69,37 @@ Page({
     });
   },
 
-  takeTask() { wx.showToast({ title: '接单成功' }) },
+  // 接单逻辑（点完自动消失）
+  takeTask(e) {
+    const taskId = e.currentTarget.dataset.id;
+
+    wx.showModal({
+      title: '确认接单',
+      content: '确定接这个任务吗？',
+      success: (res) => {
+        if (res.confirm) {
+          wx.cloud.callFunction({
+            name: "publishTask",
+            data: {
+              action: "takeTask",
+              taskId: taskId
+            },
+            success: (res) => {
+              if (res.result.success) {
+                wx.showToast({ title: "接单成功", icon: "success" });
+                this.loadMatchedTasks(); // 刷新列表，任务消失
+              } else {
+                wx.showToast({ title: res.result.errMsg, icon: "none" });
+              }
+            },
+            fail: () => {
+              wx.showToast({ title: "接单失败", icon: "none" });
+            }
+          });
+        }
+      }
+    });
+  },
+
   goToDetail() {}
 });

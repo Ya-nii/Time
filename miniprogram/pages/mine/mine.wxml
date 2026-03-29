@@ -1,51 +1,88 @@
-<view class="container">
-  <!-- 顶部个人信息栏 -->
-  <view class="user-header">
-    <image class="avatar" src="/images/default-avatar.png"></image>
-    <view class="info">
-      <text class="name">{{userInfo.nickName || '未设置昵称'}}</text>
-      <text class="tip">完善资料</text>
+<view class="page">
+  <!-- 顶部用户信息区 -->
+  <view class="header">
+    <image class="avatar" src="/images/cat.png"></image>
+    <view class="user-info">
+      <text class="nickname">{{userInfo.nickName || '未设置昵称'}}</text>
+      <text class="tag">完善资料</text>
     </view>
-    <button class="edit" bindtap="goToInfoEdit">编辑资料</button>
+    <view class="info-link" bindtap="goToInfoEdit">编辑资料 ></view>
   </view>
 
-  <!-- 积分卡片 -->
-  <view class="score-card">
-    <text>我的积分</text>
-    <text class="score">{{userInfo.score || 0}}</text>
+  <!-- 快捷功能图标区 -->
+  <view class="icon-bar">
+    <view class="icon-item">
+      <view class="icon">📅</view>
+      <text class="label">每日签到</text>
+    </view>
+    <view class="icon-item">
+      <view class="icon">📜</view>
+      <text class="label">积分规则</text>
+    </view>
+    <view class="icon-item">
+      <view class="icon">🎓</view>
+      <text class="label">校园认证</text>
+    </view>
+    <view class="icon-item">
+      <view class="icon">📚</view>
+      <text class="label">导入课程表</text>
+    </view>
+    <view class="icon-item">
+      <view class="icon">📋</view>
+      <text class="label">我的任务</text>
+    </view>
   </view>
 
-  <!-- 功能菜单网格 -->
-  <view class="menu-grid">
-    <view class="item" bindtap="goToSign">
-      <text class="icon">📅</text>
-      <text>每日签到</text>
-      <text wx:if="{{continuousDays>0}}" class="tag">连续{{continuousDays}}天</text>
+  <!-- 我的权益/积分区 -->
+  <view class="benefit-card">
+    <view class="section-title">我的积分</view>
+    <view class="benefit-row">
+      <view class="benefit-item" bindtap="goScoreDetail">
+        <text class="num">{{userInfo.score || 0}}</text>
+        <text class="name">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 列表功能区 -->
+  <view class="list-card">
+    <view class="list-item" bindtap="goToSign">
+      <text class="item-icon">📅</text>
+      <text class="item-text">每日签到</text>
+      <view style="display:flex;align-items:center;">
+        <text wx:if="{{continuousDays > 0}}" class="tag-text">连续{{continuousDays}}天</text>
+        <text class="arrow">></text>
+      </view>
     </view>
 
-    <view class="item" bindtap="showScoreRule">
-      <text class="icon">📜</text>
-      <text>积分规则</text>
+    <view class="list-item" bindtap="showScoreRule">
+      <text class="item-icon">📜</text>
+      <text class="item-text">积分规则</text>
+      <text class="arrow">></text>
     </view>
 
-    <view class="item" bindtap="goVerify">
-      <text class="icon">🎓</text>
-      <text>校园认证</text>
+    <view class="list-item" bindtap="goVerify">
+      <text class="item-icon">🎓</text>
+      <text class="item-text">校园认证</text>
+      <text class="arrow">></text>
     </view>
 
-    <view class="item" bindtap="goToCourse">
-      <text class="icon">📚</text>
-      <text>导入课程表</text>
+    <view class="list-item" bindtap="goToCourse">
+      <text class="item-icon">📚</text>
+      <text class="item-text">导入课程表</text>
+      <text class="arrow">></text>
     </view>
 
-    <view class="item" bindtap="goToMyTask">
-      <text class="icon">📋</text>
-      <text>我的任务</text>
+    <view class="list-item" bindtap="goToMyTask">
+      <text class="item-icon">📋</text>
+      <text class="item-text">我的任务</text>
+      <text class="arrow">></text>
     </view>
 
-    <view class="item" bindtap="goScoreDetail">
-      <text class="icon">📊</text>
-      <text>积分记录</text>
+    <view class="list-item" bindtap="goScoreDetail">
+      <text class="item-icon">📊</text>
+      <text class="item-text">积分记录</text>
+      <text class="arrow">></text>
     </view>
   </view>
 </view>

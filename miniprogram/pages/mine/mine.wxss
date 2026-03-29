@@ -1,106 +1,106 @@
-.mine-page {
-  background-color: #f7f8fa;
+/* 整体背景 */
+.container {
+  background: #f7f8fa;
   min-height: 100vh;
-  padding: 30rpx 25rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
+  padding: 20rpx;
 }
 
-.card {
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 25rpx;
-  box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0.05);
-}
-
-.big-card {
-  padding: 35rpx 25rpx;
-}
-
-.user-row {
+/* 顶部用户栏 */
+.user-header {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
 }
 
 .avatar {
   width: 90rpx;
   height: 90rpx;
   border-radius: 50%;
-  background-color: #e5e5e5;
+  background: #eee;
 }
 
-.user-info {
+.info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
+  margin-left: 20rpx;
 }
 
-.nickname {
-  font-size: 34rpx;
-  color: #333;
-  font-weight: 500;
+.name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
 }
 
-.desc {
+.tip {
   font-size: 24rpx;
   color: #999;
 }
 
-.edit-btn {
-  width: 130rpx;
-  height: 50rpx;
+.edit {
   font-size: 24rpx;
   color: #07c160;
-  background-color: #e8f5e9;
-  border: none;
-  border-radius: 25rpx;
-  padding: 0;
+  background: none;
+  border: 1rpx solid #07c160;
+  border-radius: 30rpx;
+  padding: 10rpx 20rpx;
 }
 
-.score-row {
+/* 积分卡片 */
+.score-card {
+  background: linear-gradient(90deg, #07c160, #06a855);
+  color: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30rpx;
 }
 
-.score-label {
-  font-size: 28rpx;
-  color: #666;
-}
-
-.score-value {
-  font-size: 36rpx;
-  color: #07c160;
+.score {
+  font-size: 48rpx;
   font-weight: bold;
 }
 
-.func-row {
+/* 功能宫格 */
+.menu-grid {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
 }
 
-.func-text {
-  font-size: 28rpx;
-  color: #333;
-}
-
-.record-row {
+.item {
+  width: 33.33%;
   display: flex;
   flex-direction: column;
-  gap: 15rpx;
+  align-items: center;
+  padding: 20rpx 0;
+  position: relative;
 }
 
-.record-title {
-  font-size: 28rpx;
-  color: #333;
-  font-weight: 500;
+.icon {
+  font-size: 40rpx;
+  margin-bottom: 10rpx;
 }
 
-.record-empty {
+.item text {
   font-size: 26rpx;
-  color: #999;
+  color: #333;
+}
+
+.tag {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  background: #e6f7f0;
+  color: #8bea9c !important;
+  font-size: 20rpx !important;
+  padding: 4rpx 8rpx;
+  border-radius: 10rpx;
 }

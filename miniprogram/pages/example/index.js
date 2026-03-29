@@ -14,7 +14,7 @@ Page({
     currentFilter: 'all'
   },
 
-  // 每次进入页面都会刷新数据
+  // 每次进入页面刷新
   onShow() {
     this.loadAllTasks()
   },
@@ -24,14 +24,14 @@ Page({
     this.loadAllTasks(true)
   },
 
-  // 切换筛选标签
+  // 切换筛选
   switchFilter(e) {
     const type = e.currentTarget.dataset.type
     this.setData({ currentFilter: type })
     this.filterTasks()
   },
 
-  // 根据筛选条件过滤任务
+  // 筛选任务
   filterTasks() {
     const { allTasks, currentFilter } = this.data
     let filtered = allTasks
@@ -39,38 +39,36 @@ Page({
     if (currentFilter !== 'all') {
       filtered = allTasks.filter(item => item.type === currentFilter)
     }
-    filtered.sort((a, b) => a.walkTime - b.walkTime) // 按距离排序
+    filtered.sort((a, b) => a.walkTime - b.walkTime)
     this.setData({ taskList: filtered })
   },
 
-  // 核心：加载云端任务
+  // 加载任务列表
   loadAllTasks(isRefresh = false) {
     this.setData({ isLoading: true })
 
-    // 本地模拟数据（开发调试用）
+    // 本地模拟数据（待接单）
     const localTasks = [
-      { id: 1, type: 'take', content: '去食堂顺便帮带一份水果捞，有偿！', walkTime: 3, createTime: '2026-03-24 10:00' }
+      { id: 1, type: 'take', content: '去食堂顺便帮带一份水果捞，有偿！', walkTime: 3, createTime: '2026-03-24 10:00', status: 'pending' }
     ]
 
-    // 调用云函数获取云端数据
+    // 调用云函数获取待接单任务
     wx.cloud.callFunction({
       name: 'publishTask',
       data: { action: 'getTaskList' },
       success: (res) => {
         if (res.result.success) {
-          // 格式化云端数据，和本地数据格式统一
           const cloudTasks = res.result.data.map(item => ({
             id: item._id,
             type: item.templateType,
             content: item.content,
             walkTime: 3,
-            createTime: new Date(item.createTime).toLocaleString()
+            createTime: new Date(item.createTime).toLocaleString(),
+            status: item.status
           }))
-          // 合并数据
           this.setData({ allTasks: [...cloudTasks, ...localTasks] })
           this.filterTasks()
         } else {
-          // 云端获取失败时，只显示本地数据
           this.setData({ allTasks: localTasks })
           this.filterTasks()
         }
@@ -86,6 +84,7 @@ Page({
     })
   },
 
+  // 核心：接单逻辑
   takeTask(e) {
     const taskId = e.currentTarget.dataset.id
     wx.showModal({
@@ -93,7 +92,26 @@ Page({
       content: '确定要接下这个任务吗？',
       success: (res) => {
         if (res.confirm) {
-          wx.showToast({ title: '接单成功！', icon: 'success' })
+          // 调用云函数修改任务状态
+          wx.cloud.callFunction({
+            name: 'publishTask',
+            data: {
+              action: 'takeTask',
+              taskId: taskId
+            },
+            success: (res) => {
+              if (res.result.success) {
+                wx.showToast({ title: '接单成功！', icon: 'success' })
+                // 刷新列表，任务会自动消失
+                this.loadAllTasks()
+              } else {
+                wx.showToast({ title: res.result.errMsg, icon: 'none' })
+              }
+            },
+            fail: () => {
+              wx.showToast({ title: '接单失败，请重试', icon: 'error' })
+            }
+          })
         }
       }
     })

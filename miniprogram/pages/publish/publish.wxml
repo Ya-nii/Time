@@ -35,9 +35,10 @@
       bindinput="onInput"
       placeholder="请填写任务详情">
     </textarea>
-    <!-- 定位图标（放在输入框右下角） -->
+    
+    <!-- 稳定版：微信内置纸飞机图标 -->
     <view class="location-icon" bindtap="getLocation">
-      📍
+      <icon type="send" size="25" color="#3CB997" />
     </view>
   </view>
 

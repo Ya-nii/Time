@@ -1,5 +1,5 @@
 page {
-  background: #f5f7fa;
+  background: #F2F9F6; /* 统一浅绿背景 */
 }
 .page {
   padding: 20rpx;
@@ -19,7 +19,7 @@ page {
   height: 100rpx;
   border-radius: 50%;
   object-fit: cover;
-  background: #f0f0f0;
+  background: #E2F5EE;
 }
 .user-info {
   flex: 1;
@@ -30,17 +30,18 @@ page {
   font-size: 34rpx;
   font-weight: bold;
   margin-bottom: 8rpx;
+  color: #2A5548;
 }
 .tag {
   font-size: 24rpx;
-  color: #0099ff;
-  background: #e6f7ff;
+  color: #3CB997;
+  background: #E6F7F3;
   padding: 4rpx 14rpx;
   border-radius: 20rpx;
 }
 .info-link {
   font-size: 26rpx;
-  color: #999;
+  color: #6B8A82;
 }
 
 /* 图标快捷栏 */
@@ -67,6 +68,7 @@ page {
   justify-content: center;
   font-size: 32rpx;
   margin-bottom: 10rpx;
+  /* 图标颜色不改动 */
 }
 .label {
   font-size: 24rpx;
@@ -84,6 +86,7 @@ page {
   font-size: 30rpx;
   font-weight: bold;
   margin-bottom: 20rpx;
+  color: #2A5548;
 }
 .benefit-row {
   display: flex;
@@ -94,7 +97,7 @@ page {
 .num {
   font-size: 44rpx;
   font-weight: bold;
-  color: #07c160;
+  color: #3CB997;
 }
 .name {
   font-size: 26rpx;
@@ -119,14 +122,16 @@ page {
 .item-icon {
   font-size: 34rpx;
   margin-right: 20rpx;
+  /* 图标颜色完全不改动 */
 }
 .item-text {
   flex: 1;
   font-size: 29rpx;
+  color: #2A5548;
 }
 .tag-text {
   font-size: 24rpx;
-  color: #07c160;
+  color: #3CB997;
   margin-right: 10rpx;
 }
 .arrow {

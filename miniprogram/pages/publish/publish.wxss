@@ -60,19 +60,26 @@
   padding-bottom: 20rpx;
 }
 
-/* ---------- 纸飞机图标按钮（美化完成） ---------- */
+/* 图标按钮容器（为了适配更大的图标，我也稍微放大了一点） */
 .location-icon {
   position: absolute;
   right: 35rpx;
   bottom: 35rpx;
-  width: 66rpx;
-  height: 66rpx;
+  width: 72rpx;
+  height: 72rpx;
   background: #E2F5EE;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
   box-shadow: 0 3rpx 10rpx rgba(60, 185, 151, 0.1);
+}
+
+/* 图标大小从 36rpx 放大到了 44rpx */
+.icon-img {
+  width: 55rpx;
+  height: 55rpx;
 }
 
 .publish-area {

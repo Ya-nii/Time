@@ -42,7 +42,11 @@
       }
     ]
   },
-
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取位置，发布任务时使用"
+    }
+  },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

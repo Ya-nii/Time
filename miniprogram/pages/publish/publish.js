@@ -24,6 +24,8 @@ Page({
       label: "顺路捎带",
     },
     taskContent: "我要去{地点}，{时间}顺路，可帮忙捎带小件物品~",
+    latitude: "",
+    longitude: ""
   },
 
   onInput(e) {
@@ -42,14 +44,24 @@ Page({
     });
   },
 
+  // 定位：不需要密钥、不需要地图、纯小程序API
   getLocation() {
     wx.showLoading({ title: '定位中...' })
     wx.getLocation({
       type: 'gcj02',
       success: (res) => {
+        // 直接用经纬度作为地点，无需任何密钥
         let address = `(${res.latitude.toFixed(4)}, ${res.longitude.toFixed(4)})`
+        
+        // 替换 {地点}
         let newContent = this.data.taskContent.replace(/\{地点\}/g, address)
-        this.setData({ taskContent: newContent })
+        
+        this.setData({
+          taskContent: newContent,
+          latitude: res.latitude,
+          longitude: res.longitude
+        })
+
         wx.hideLoading()
         wx.showToast({ title: '定位成功' })
       },
@@ -60,8 +72,9 @@ Page({
     })
   },
 
+  // 发布任务（云开发）
   onPublishTask() {
-    const { currentTemplate, taskContent } = this.data;
+    const { currentTemplate, taskContent, latitude, longitude } = this.data;
 
     if (!taskContent.trim()) {
       wx.showToast({ title: "请输入任务内容", icon: "none" });
@@ -75,7 +88,9 @@ Page({
       data: {
         content: taskContent,
         templateType: currentTemplate.type,
-        templateLabel: currentTemplate.label
+        templateLabel: currentTemplate.label,
+        latitude: latitude,
+        longitude: longitude
       },
       success: (res) => {
         wx.hideLoading();
